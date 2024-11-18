@@ -1,0 +1,39 @@
+services:
+  geoserver:
+    image: oscarfonts/geoserver
+    ports:
+      - "8080:8080"
+    environment:
+      - GEOSERVER_ADMIN_PASSWORD=geoserver
+      - GEOSERVER_CORS_ENABLED=false
+    depends_on:
+      - postgis
+
+  postgis:
+    image: postgis/postgis:15-3.3
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: sigdb
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgis_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U myuser -d sigdb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+
+  ready-check:
+    image: busybox
+    depends_on:
+      - geoserver
+      - postgis
+    command: ["sh", "-c", "echo '🚀 Todos los servicios están listos'"]
+
+
+volumes:
+  postgis_data:
+
