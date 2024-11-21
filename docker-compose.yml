@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   geoserver:
     image: oscarfonts/geoserver
@@ -25,15 +27,21 @@ services:
       timeout: 5s
       retries: 5
 
+  web:
+    image: nginx:alpine
+    ports:
+      - "8081:80"
+    volumes:
+      - C:/Users/flgo_/Documentos/GISTPI:/usr/share/nginx/html
+      - C:/Users/flgo_/Documentos/GISTPI/libs:/usr/share/nginx/html/libs
 
   ready-check:
     image: busybox
     depends_on:
       - geoserver
       - postgis
+      - web
     command: ["sh", "-c", "echo '🚀 Todos los servicios están listos'"]
-
 
 volumes:
   postgis_data:
-
