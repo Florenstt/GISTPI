@@ -9,7 +9,7 @@ body {
 
 #map {
     height: 500px;
-    width: calc(100% - 200px); /* Deja espacio para la barra lateral */
+    width: 100%;
     float: left;
     border: 1px solid;
 }
@@ -21,4 +21,5 @@ body {
     border: 1px solid;
     padding: 10px;
     box-sizing: border-box;
+    overflow-y: auto;
 }
