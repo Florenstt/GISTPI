@@ -1,6 +1,8 @@
 # Node modules
 node_modules/
 
+v10.2.1/
+
 # Logs
 logs/
 *.log
