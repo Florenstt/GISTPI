@@ -1,0 +1,14 @@
+#scaleBarOptions {
+  margin-top: 10px;
+}
+
+#scaleBarOptions label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+#scaleBarOptions select,
+#scaleBarOptions input[type="range"],
+#scaleBarOptions input[type="checkbox"] {
+  margin-bottom: 10px;
+}
