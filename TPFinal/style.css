@@ -1,0 +1,49 @@
+@import "node_modules/ol/ol.css";
+
+html, body {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#map {
+    height: 500px;
+    width: 100%;
+    float: left;
+    border: 1px solid;
+}
+
+#sidebar {
+  width: 200px;
+  height: 500px;
+  float: right;
+  border: 1px solid;
+  padding: 10px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.map {
+  width: 100%;
+  height: 400px;
+}
+
+#scaleBarOptions {
+  display: none;
+}
+
+input[type=range] {
+  vertical-align: middle;
+}
+
+.ol-scale-bar-inverted .ol-scale-singlebar-even {
+  background-color: var(--ol-background-color);
+}
+
+.ol-scale-bar-inverted .ol-scale-singlebar-odd {
+  background-color: var(--ol-subtle-foreground-color);
+}
