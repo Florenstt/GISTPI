@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Map from 'ol/Map.js';
 import OSM from 'ol/source/OSM.js';
 import TileLayer from 'ol/layer/Tile.js';
@@ -9,47 +9,46 @@ import ScaleControlComponent from './ScaleControlComponent';
 
 const MapComponent = () => {
   const mapRef = useRef(null);
+  const [map, setMap] = useState(null);
 
   useEffect(() => {
-    if (mapRef.current) {
-      return; // Si el mapa ya ha sido inicializado, no hacer nada
-    }
-
-    const map = new Map({
-      layers: [
-        new TileLayer({
-          source: new OSM(),
+    if (mapRef.current && !map) {
+      const mapInstance = new Map({
+        layers: [
+          new TileLayer({
+            source: new OSM(),
+          }),
+        ],
+        target: mapRef.current,
+        view: new View({
+          center: [0, 0],
+          zoom: 2,
         }),
-      ],
-      target: 'map',
-      view: new View({
-        center: [0, 0],
-        zoom: 2,
-      }),
-    });
+      });
 
-    mapRef.current = map; // Guardar la instancia del mapa en el ref
+      setMap(mapInstance); // Guardar la instancia del mapa en el estado
 
-    document.getElementById('zoom-out').onclick = function () {
-      const view = map.getView();
-      const zoom = view.getZoom();
-      view.setZoom(zoom - 1);
-    };
+      document.getElementById('zoom-out').onclick = function () {
+        const view = mapInstance.getView();
+        const zoom = view.getZoom();
+        view.setZoom(zoom - 1);
+      };
 
-    document.getElementById('zoom-in').onclick = function () {
-      const view = map.getView();
-      const zoom = view.getZoom();
-      view.setZoom(zoom + 1);
-    };
-  }, []);
+      document.getElementById('zoom-in').onclick = function () {
+        const view = mapInstance.getView();
+        const zoom = view.getZoom();
+        view.setZoom(zoom + 1);
+      };
+    }
+  }, [map]);
 
   return (
     <div>
       <a className="skiplink" href="#map">Go to map</a>
-      <div id="map" className="map" tabIndex="0"></div>
+      <div id="map" className="map" tabIndex="0" ref={mapRef}></div>
       <button id="zoom-out">Zoom out</button>
       <button id="zoom-in">Zoom in</button>
-      {mapRef.current && <ScaleControlComponent map={mapRef.current} />}
+      {map && <ScaleControlComponent map={map} />}
     </div>
   );
 };
