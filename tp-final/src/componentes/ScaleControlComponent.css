@@ -1,0 +1,32 @@
+.map {
+  width: 100%;
+  height: 400px;
+}
+
+#scaleBarOptions {
+  display: none;
+  margin-top: 10px;
+}
+
+#scaleBarOptions label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+#scaleBarOptions select,
+#scaleBarOptions input[type="range"],
+#scaleBarOptions input[type="checkbox"] {
+  margin-bottom: 10px;
+}
+
+input[type=range] {
+  vertical-align: middle;
+}
+
+.ol-scale-bar-inverted .ol-scale-singlebar-even {
+  background-color: var(--ol-background-color);
+}
+
+.ol-scale-bar-inverted .ol-scale-singlebar-odd {
+  background-color: var(--ol-subtle-foreground-color);
+}
