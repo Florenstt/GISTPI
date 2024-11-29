@@ -7,7 +7,6 @@ import OSM from 'ol/source/OSM.js';
 import ImageWMS from 'ol/source/ImageWMS.js';
 import 'ol/ol.css';
 import './MapComponent.css';
-import DrawComponent from './DrawComponent';
 
 const MapComponent = () => {
   const mapRef = useRef(null);
@@ -87,11 +86,10 @@ const MapComponent = () => {
   return (
     <div>
       <a className="skiplink" href="#map">Go to map</a>
-      <div id="map" className="map" tabIndex="0" style={{ width: 'calc(100% - 200px)', height: '100vh' }}></div>
-      <div className="sidebar">
-        <h3>Controls</h3>
-        <button id="zoom-out">Zoom out</button>
-        <button id="zoom-in">Zoom in</button>
+      <div id="map" className="map" tabIndex="0" style={{ width: '100%', height: '400px' }}></div>
+      <button id="zoom-out">Zoom out</button>
+      <button id="zoom-in">Zoom in</button>
+      <div>
         <h3>Layers</h3>
         <label>
           <input
@@ -111,7 +109,10 @@ const MapComponent = () => {
         </label>
         <DrawComponent map={mapRef.current} />
       </div>
+<<<<<<< HEAD
       
+=======
+>>>>>>> parent of b793ee9 (funciona la medicion de las distancias sobre el mapa principal. Hay un menu de capas para habilitarlas)
     </div>
   );
 };
