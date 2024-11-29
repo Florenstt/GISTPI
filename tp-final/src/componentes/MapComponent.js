@@ -108,6 +108,7 @@ const MapComponent = () => {
           Actividades Económicas
         </label>
       </div>
+      
     </div>
   );
 };
