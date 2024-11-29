@@ -2,6 +2,7 @@
   width: 100%;
   height: 400px;
 }
+
 a.skiplink {
   position: absolute;
   clip: rect(1px, 1px, 1px, 1px);
@@ -11,6 +12,7 @@ a.skiplink {
   width: 1px;
   overflow: hidden;
 }
+
 a.skiplink:focus {
   clip: auto;
   height: auto;
@@ -18,6 +20,28 @@ a.skiplink:focus {
   background-color: #fff;
   padding: 0.3em;
 }
+
 #map:focus {
   outline: #4A74A8 solid 0.15em;
+}
+
+.sidebar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 200px;
+  height: 100%;
+  background-color: #f8f9fa;
+  padding: 10px;
+  box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+}
+
+.sidebar h3 {
+  margin-top: 0;
+}
+
+.sidebar button {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
 }
