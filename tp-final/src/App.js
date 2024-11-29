@@ -1,13 +1,12 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
 import MapComponent from './componentes/MapComponent';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
+    <div>
       <MapComponent />
     </div>
   );
-}
+};
 
 export default App;
