@@ -107,12 +107,8 @@ const MapComponent = () => {
           />
           Actividades Económicas
         </label>
-        <DrawComponent map={mapRef.current} />
       </div>
-<<<<<<< HEAD
-      
-=======
->>>>>>> parent of b793ee9 (funciona la medicion de las distancias sobre el mapa principal. Hay un menu de capas para habilitarlas)
+      <DrawComponent map={mapRef.current} />
     </div>
   );
 };
