@@ -108,7 +108,6 @@ const MapComponent = () => {
           Actividades Económicas
         </label>
       </div>
-      <DrawComponent map={mapRef.current} />
     </div>
   );
 };
