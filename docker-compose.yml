@@ -11,6 +11,7 @@ services:
 
   postgis:
     image: postgis/postgis:15-3.3
+    container_name: postgis-container
     environment:
       POSTGRES_USER: myuser
       POSTGRES_PASSWORD: mypassword
@@ -30,7 +31,11 @@ services:
     ports:
       - "8081:80"
     volumes:
-      - C:/Users/flgo_/Documentos/GISTPI:/usr/share/nginx/html
+    # Para windows
+    #  - C:/Users/flgo_/Documentos/GISTPI:/usr/share/nginx/html
+    # Para macs
+      - ./GISTPI:/usr/share/nginx/html:rw
+
 
   ready-check:
     image: busybox
