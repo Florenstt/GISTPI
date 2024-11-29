@@ -6,7 +6,9 @@ import ImageLayer from 'ol/layer/Image.js';
 import OSM from 'ol/source/OSM.js';
 import ImageWMS from 'ol/source/ImageWMS.js';
 import 'ol/ol.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './MapComponent.css';
+import Sidebar from './Sidebar';
 
 const MapComponent = () => {
   const mapRef = useRef(null);
@@ -18,97 +20,66 @@ const MapComponent = () => {
   });
 
   useEffect(() => {
-    if (mapRef.current) return; // Si el mapa ya existe, no hacer nada
+    if (mapRef.current && !mapRef.current.map) {
+      const actividadesEconomicasLayer = new ImageLayer({
+        title: "Actividades Económicas",
+        visible: layers.actividadesEconomicas,
+        source: new ImageWMS({
+          url: 'http://localhost:8080/geoserver/TPI/wms',
+          params: {
+            LAYERS: 'TPI:actividades_economicas',
+            TILED: true,
+          },
+        }),
+      });
 
-    const actividadesEconomicasLayer = new ImageLayer({
-      title: "Actividades Económicas",
-      visible: layers.actividadesEconomicas,
-      source: new ImageWMS({
-        url: 'http://localhost:8080/geoserver/TPI/wms',
-        params: {
-          LAYERS: 'TPI:actividades_economicas',
-          TILED: true
-        },
-        serverType: 'geoserver'
-      })
-    });
+      const osmLayer = new TileLayer({
+        source: new OSM(),
+        visible: layers.osm,
+      });
 
-    const osmLayer = new TileLayer({
-      source: new OSM(),
-      visible: layers.osm,
-    });
+      const map = new Map({
+        target: mapRef.current,
+        layers: [osmLayer, actividadesEconomicasLayer],
+        view: new View({
+          center: [0, 0],
+          zoom: 2,
+        }),
+      });
 
-    osmLayerRef.current = osmLayer;
-    actividadesEconomicasLayerRef.current = actividadesEconomicasLayer;
-
-    mapRef.current = new Map({
-      layers: [
-        osmLayer,
-        actividadesEconomicasLayer
-      ],
-      target: 'map',
-      view: new View({
-        projection: 'EPSG:4326',
-        center: [-59, -40.5],
-        zoom: 4
-      }),
-    });
-
-    document.getElementById('zoom-out').onclick = function () {
-      const view = mapRef.current.getView();
-      const zoom = view.getZoom();
-      view.setZoom(zoom - 1);
-    };
-
-    document.getElementById('zoom-in').onclick = function () {
-      const view = mapRef.current.getView();
-      const zoom = view.getZoom();
-      view.setZoom(zoom + 1);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (osmLayerRef.current) {
-      osmLayerRef.current.setVisible(layers.osm);
-    }
-    if (actividadesEconomicasLayerRef.current) {
-      actividadesEconomicasLayerRef.current.setVisible(layers.actividadesEconomicas);
+      mapRef.current.map = map;
+      osmLayerRef.current = osmLayer;
+      actividadesEconomicasLayerRef.current = actividadesEconomicasLayer;
     }
   }, [layers]);
 
-  const handleLayerChange = (layerName) => {
-    setLayers((prevLayers) => ({
-      ...prevLayers,
-      [layerName]: !prevLayers[layerName],
-    }));
+  const handleLayerChange = (layer) => {
+    setLayers((prevLayers) => {
+      const newLayers = {
+        ...prevLayers,
+        [layer]: !prevLayers[layer],
+      };
+
+      if (layer === 'osm') {
+        osmLayerRef.current.setVisible(newLayers.osm);
+      } else if (layer === 'actividadesEconomicas') {
+        actividadesEconomicasLayerRef.current.setVisible(newLayers.actividadesEconomicas);
+      }
+
+      return newLayers;
+    });
+  };
+
+  const handleZoom = (zoomIn) => {
+    const view = mapRef.current.map.getView();
+    const zoom = view.getZoom();
+    view.setZoom(zoomIn ? zoom + 1 : zoom - 1);
   };
 
   return (
-    <div>
-      <a className="skiplink" href="#map">Go to map</a>
-      <div id="map" className="map" tabIndex="0" style={{ width: '100%', height: '400px' }}></div>
-      <button id="zoom-out">Zoom out</button>
-      <button id="zoom-in">Zoom in</button>
-      <div>
-        <h3>Layers</h3>
-        <label>
-          <input
-            type="checkbox"
-            checked={layers.osm}
-            onChange={() => handleLayerChange('osm')}
-          />
-          OSM
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            checked={layers.actividadesEconomicas}
-            onChange={() => handleLayerChange('actividadesEconomicas')}
-          />
-          Actividades Económicas
-        </label>
-      </div>
-      
+    <div className="map-container">
+      <div ref={mapRef} className="map"></div>
+      <Sidebar layers={layers} handleLayerChange={handleLayerChange} handleZoom={handleZoom} />
     </div>
   );
 };
