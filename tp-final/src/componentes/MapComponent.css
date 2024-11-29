@@ -3,22 +3,6 @@
   height: 400px;
 }
 
-#scaleBarOptions {
-  display: none;
-}
-
-input[type=range] {
-  vertical-align: middle;
-}
-
-.ol-scale-bar-inverted .ol-scale-singlebar-even {
-  background-color: var(--ol-background-color);
-}
-
-.ol-scale-bar-inverted .ol-scale-singlebar-odd {
-  background-color: var(--ol-subtle-foreground-color);
-}
-
 a.skiplink {
   position: absolute;
   clip: rect(1px, 1px, 1px, 1px);
@@ -39,4 +23,25 @@ a.skiplink:focus {
 
 #map:focus {
   outline: #4A74A8 solid 0.15em;
+}
+
+.sidebar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 200px;
+  height: 100%;
+  background-color: #f8f9fa;
+  padding: 10px;
+  box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+}
+
+.sidebar h3 {
+  margin-top: 0;
+}
+
+.sidebar button {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
 }
