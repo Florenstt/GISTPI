@@ -14,56 +14,68 @@ const MapComponent = () => {
   const mapRef = useRef(null);
   const osmLayerRef = useRef(null);
   const actividadesEconomicasLayerRef = useRef(null);
+  const actividadesAgropecuariasLayerRef = useRef(null);
+
   const [layers, setLayers] = useState({
     osm: true,
     actividadesEconomicas: true,
+    actividadesAgropecuarias: true,
   });
 
   useEffect(() => {
-    if (mapRef.current && !mapRef.current.map) {
-      const actividadesEconomicasLayer = new ImageLayer({
-        title: "Actividades Económicas",
-        visible: layers.actividadesEconomicas,
-        source: new ImageWMS({
-          url: 'http://localhost:8080/geoserver/TPI/wms',
-          params: {
-            LAYERS: 'TPI:actividades_economicas',
-            TILED: true,
-          },
-        }),
-      });
+    if (mapRef.current.map) return; // Si el mapa ya existe, no hacer nada
 
-      const osmLayer = new TileLayer({
-        source: new OSM(),
-        visible: layers.osm,
-      });
+    const actividadesEconomicasLayer = new ImageLayer({
+      source: new ImageWMS({
+        url: 'http://localhost:8080/geoserver/TPI/wms',
+        params: {
+          LAYERS: 'TPI:actividades_economicas',
+          TILED: true,
+        },
+      }),
+    });
 
-      const map = new Map({
-        target: mapRef.current,
-        layers: [osmLayer, actividadesEconomicasLayer],
-        view: new View({
-          center: [0, 0],
-          zoom: 2,
-        }),
-      });
+    const actividadesAgropecuariasLayer = new ImageLayer({
+      source: new ImageWMS({
+        url: 'http://localhost:8080/geoserver/TPI/wms',
+        params: {
+          LAYERS: 'TPI:actividades_agropecuarias',
+          TILED: true,
+        },
+      }),
+    });
 
-      mapRef.current.map = map;
-      osmLayerRef.current = osmLayer;
-      actividadesEconomicasLayerRef.current = actividadesEconomicasLayer;
-    }
+    const osmLayer = new TileLayer({
+      source: new OSM(),
+      visible: layers.osm,
+    });
+
+    const map = new Map({
+      target: mapRef.current,
+      layers: [osmLayer, actividadesEconomicasLayer, actividadesAgropecuariasLayer],
+      view: new View({
+        projection: 'EPSG:4326',
+        center: [-59, -40.5],
+        zoom: 4
+      }),
+    });
+
+    mapRef.current.map = map;
+    osmLayerRef.current = osmLayer;
+    actividadesEconomicasLayerRef.current = actividadesEconomicasLayer;
+    actividadesAgropecuariasLayerRef.current = actividadesAgropecuariasLayer;
   }, [layers]);
 
-  const handleLayerChange = (layer) => {
+  const handleLayerChange = (layerName) => {
     setLayers((prevLayers) => {
-      const newLayers = {
-        ...prevLayers,
-        [layer]: !prevLayers[layer],
-      };
+      const newLayers = { ...prevLayers, [layerName]: !prevLayers[layerName] };
 
-      if (layer === 'osm') {
+      if (layerName === 'osm') {
         osmLayerRef.current.setVisible(newLayers.osm);
-      } else if (layer === 'actividadesEconomicas') {
+      } else if (layerName === 'actividadesEconomicas') {
         actividadesEconomicasLayerRef.current.setVisible(newLayers.actividadesEconomicas);
+      } else if (layerName === 'actividadesAgropecuarias') {
+        actividadesAgropecuariasLayerRef.current.setVisible(newLayers.actividadesAgropecuarias);
       }
 
       return newLayers;

@@ -3,8 +3,6 @@ import React from 'react';
 const Sidebar = ({ layers, handleLayerChange, handleZoom }) => {
   return (
     <div className="sidebar p-3">
-      <button className="btn btn-primary mb-2" onClick={() => handleZoom(true)}>Zoom In</button>
-      <button className="btn btn-secondary mb-2" onClick={() => handleZoom(false)}>Zoom Out</button>
       <div className="form-check">
         <input
           className="form-check-input"
@@ -26,6 +24,21 @@ const Sidebar = ({ layers, handleLayerChange, handleZoom }) => {
         <label className="form-check-label">
           Actividades Económicas
         </label>
+      </div>
+      <div className="form-check">
+        <input
+          className="form-check-input"
+          type="checkbox"
+          checked={layers.actividadesAgropecuarias}
+          onChange={() => handleLayerChange('actividadesAgropecuarias')}
+        />
+        <label className="form-check-label">
+          Actividades Agropecuarias
+        </label>
+      </div>
+      <div className="zoom-controls">
+        <button className="btn btn-primary mb-2" onClick={() => handleZoom(true)}>Zoom In</button>
+        <button className="btn btn-secondary mb-2" onClick={() => handleZoom(false)}>Zoom Out</button>
       </div>
     </div>
   );

@@ -27,39 +27,40 @@ const LayersComponent = () => {
       })
     });
 
+    const actividadesAgropecuariasLayer = new ImageLayer({
+      title: "Actividades Agropecuarias",
+      visible: true,
+      source: new ImageWMS({
+        url: 'http://localhost:8080/geoserver/TPI/wms',
+        params: {
+          LAYERS: 'TPI:actividades_agropecuarias',
+          TILED: true
+        },
+        serverType: 'geoserver'
+      })
+    });
+
     mapRef.current = new Map({
       layers: [
         new TileLayer({
           source: new OSM(),
         }),
-        actividadesEconomicasLayer
+        actividadesEconomicasLayer,
+        actividadesAgropecuariasLayer
       ],
       target: 'map',
       view: new View({
-        center: [0, 0],
-        zoom: 2,
+        projection: 'EPSG:4326',
+        center: [-59, -40.5],
+        zoom: 4
       }),
     });
-
-    document.getElementById('zoom-out').onclick = function () {
-      const view = mapRef.current.getView();
-      const zoom = view.getZoom();
-      view.setZoom(zoom - 1);
-    };
-
-    document.getElementById('zoom-in').onclick = function () {
-      const view = mapRef.current.getView();
-      const zoom = view.getZoom();
-      view.setZoom(zoom + 1);
-    };
   }, []);
 
   return (
     <div>
       <a className="skiplink" href="#map">Go to map</a>
       <div id="map" className="map" tabIndex="0"></div>
-      <button id="zoom-out">Zoom out</button>
-      <button id="zoom-in">Zoom in</button>
     </div>
   );
 };
