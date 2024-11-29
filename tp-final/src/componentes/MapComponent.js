@@ -109,8 +109,9 @@ const MapComponent = () => {
           />
           Actividades Económicas
         </label>
+        <DrawComponent map={mapRef.current} />
       </div>
-      <DrawComponent map={mapRef.current} />
+      
     </div>
   );
 };
