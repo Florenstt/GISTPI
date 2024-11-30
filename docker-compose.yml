@@ -25,19 +25,12 @@ services:
       timeout: 5s
       retries: 5
 
-  web:
-    image: nginx:alpine
-    ports:
-      - "8081:80"
-    volumes:
-      - C:/Users/flgo_/Documentos/GISTPI:/usr/share/nginx/html
 
   ready-check:
     image: busybox
     depends_on:
       - geoserver
       - postgis
-      - web
     command: ["sh", "-c", "echo '🚀 Todos los servicios están listos'"]
 
 volumes:
