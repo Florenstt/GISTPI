@@ -1,5 +1,8 @@
 .App {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 
 .App-logo {
@@ -37,11 +40,73 @@
   }
 }
 
-
-
 .map-container {
-  padding: 15px;
   flex-grow: 1;
   background-color: #e0e0e0; /* Color de fondo para distinguir el área del mapa */
   height: 100vh;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.container-fluid {
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.row {
+  flex-grow: 1;
+  flex: 1;
+  display: flex;
+}
+
+#map {
+  width: 100%;
+  height: 100%;
+}
+
+.sidebar {
+  height: 100%;
+  background-color: #f4f4f4;
+  border-left: 1px solid #ccc;
+  border-right: none;
+}
+
+.col-10 {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.col-2 {
+  width: 250px; /* Ajusta el ancho de la barra lateral según sea necesario */
+}
+
+.navbar {
+  height: 50px; /* Ajusta la altura de la barra superior */
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.content-row {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+.sidebar-container {
+  width: 250px; /* Ajusta el ancho de la barra lateral según sea necesario */
+  overflow-y: auto;
 }

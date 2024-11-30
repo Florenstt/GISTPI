@@ -1,21 +1,16 @@
 // Sidebar.js
 import React from 'react';
-import LayersControl from './LayersControl';
-import MeasureComponent from './MeasureComponent';
-import ScaleBarControl from './ScaleBarControl';
+import './Sidebar.css';
 
-const Sidebar = ({ layers, handleLayerChange, osmLayerRef, actividadesEconomicasLayerRef, actividadesAgropecuariasLayerRef, map }) => {
+const Sidebar = ({ items }) => {
   return (
     <div className="sidebar">
-      <LayersControl 
-        layers={layers} 
-        handleLayerChange={handleLayerChange} 
-        osmLayerRef={osmLayerRef}
-        actividadesEconomicasLayerRef={actividadesEconomicasLayerRef}
-        actividadesAgropecuariasLayerRef={actividadesAgropecuariasLayerRef}
-      />
-      <MeasureComponent map={map} />
-      <ScaleBarControl map={map} />
+      <h3>Lista de Cosas</h3>
+      <ul>
+        {items.map((item, index) => (
+          <li key={index}>{item}</li>
+        ))}
+      </ul>
     </div>
   );
 };
