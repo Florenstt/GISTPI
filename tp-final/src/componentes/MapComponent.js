@@ -31,11 +31,11 @@ const MapComponent = ({ onLayersUpdate }) => {
         }),
       });
 
-      setLayers([tileLayer, ...additionalLayers]);
+      setLayers(additionalLayers); // Excluye la capa OSM de la lista de capas que se pueden ocultar
       mapInitializedRef.current = true;
 
       if (onLayersUpdate) {
-        onLayersUpdate([tileLayer, ...additionalLayers]);
+        onLayersUpdate(additionalLayers); // Excluye la capa OSM de la lista de capas que se pueden ocultar
       }
     }
   }, [onLayersUpdate]);

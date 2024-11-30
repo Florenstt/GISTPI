@@ -76,6 +76,7 @@ html, body, #root {
 .sidebar {
   height: 100%;
   background-color: #f4f4f4;
+  padding: 10px;
   border-left: 1px solid #ccc;
   border-right: none;
 }

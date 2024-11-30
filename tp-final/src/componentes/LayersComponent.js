@@ -11,7 +11,7 @@ import './MapComponent.css';
 export const createLayers = () => {
   const actividadesEconomicasLayer = new ImageLayer({
     title: "Actividades Económicas",
-    visible: true,
+    visible: false, // Oculto por defecto
     source: new ImageWMS({
       url: 'http://localhost:8080/geoserver/TPI/wms',
       params: {
@@ -24,7 +24,7 @@ export const createLayers = () => {
 
   const actividadesAgropecuariasLayer = new ImageLayer({
     title: "Actividades Agropecuarias",
-    visible: true,
+    visible: false, // Oculto por defecto
     source: new ImageWMS({
       url: 'http://localhost:8080/geoserver/TPI/wms',
       params: {
