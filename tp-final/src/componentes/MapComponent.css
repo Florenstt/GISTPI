@@ -16,3 +16,11 @@
   height: 100%;
   overflow: auto;
 }
+
+.funciones {
+  border: 1px solid #ccc;
+}
+
+.capas {
+  border: 1px solid #ccc;
+}

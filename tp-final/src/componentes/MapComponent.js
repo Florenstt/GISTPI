@@ -93,17 +93,26 @@ const MapComponent = () => {
 
   return (
     <div className="map-container">
-      <MeasureComponent map={mapRef.current?.map} />
+      <div className='funciones'>
+        <h1>Funciones</h1>
+        <MeasureComponent map={mapRef.current?.map} />
+        <ScaleBarControl map={mapRef.current?.map} />
+      </div>
+      
       <div ref={mapRef} className="map"></div>
-      <Sidebar 
-        layers={layers} 
-        handleLayerChange={handleLayerChange} 
-        osmLayerRef={osmLayerRef}
-        actividadesEconomicasLayerRef={actividadesEconomicasLayerRef}
-        actividadesAgropecuariasLayerRef={actividadesAgropecuariasLayerRef}
-        handleZoom={handleZoom}
-      />
-      <ScaleBarControl map={mapRef.current?.map} />
+      <div className='capas'>
+        <h1>Capas</h1>
+        <Sidebar 
+          layers={layers} 
+          handleLayerChange={handleLayerChange} 
+          osmLayerRef={osmLayerRef}
+          actividadesEconomicasLayerRef={actividadesEconomicasLayerRef}
+          actividadesAgropecuariasLayerRef={actividadesAgropecuariasLayerRef}
+          handleZoom={handleZoom}
+        />
+      </div>
+      
+      
     </div>
   );
 };

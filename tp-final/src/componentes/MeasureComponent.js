@@ -7,6 +7,7 @@ import { unByKey } from 'ol/Observable.js';
 import { Vector as VectorSource } from 'ol/source.js';
 import { Vector as VectorLayer } from 'ol/layer.js';
 import { Fill, Stroke, Style, Circle as CircleStyle } from 'ol/style.js';
+import './MeasureComponent.css';
 
 const MeasureComponent = ({ map }) => {
   const typeSelectRef = useRef(null);
@@ -188,8 +189,8 @@ const MeasureComponent = ({ map }) => {
   }, [map]);
 
   return (
-    <div className="sidebar">
-      <h2>Measurement Tools</h2>
+    <div className="measure-component">
+      <h3>Measurement Tools</h3>
       <select ref={typeSelectRef}>
         <option value="length">Length</option>
         <option value="area">Area</option>
