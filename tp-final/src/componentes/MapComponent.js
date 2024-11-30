@@ -9,7 +9,7 @@ import 'ol/ol.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './MapComponent.css';
 import LayersControl from './LayersControl';
-import MeasureComponent from './MeasureComponent';
+import Sidebar from './Sidebar';
 
 const MapComponent = () => {
   const mapRef = useRef(null);
@@ -19,8 +19,8 @@ const MapComponent = () => {
 
   const [layers, setLayers] = useState({
     osm: true,
-    actividadesEconomicas: true,
-    actividadesAgropecuarias: true,
+    actividadesEconomicas: false,
+    actividadesAgropecuarias: false,
   });
 
   useEffect(() => {
@@ -67,16 +67,16 @@ const MapComponent = () => {
     actividadesAgropecuariasLayerRef.current = actividadesAgropecuariasLayer;
   }, [layers]);
 
-  const handleLayerChange = (layerName) => {
+  const handleLayerChange = (layerName, refs) => {
     setLayers((prevLayers) => {
       const newLayers = { ...prevLayers, [layerName]: !prevLayers[layerName] };
 
       if (layerName === 'osm') {
-        osmLayerRef.current.setVisible(newLayers.osm);
+        refs.osmLayerRef.current.setVisible(newLayers.osm);
       } else if (layerName === 'actividadesEconomicas') {
-        actividadesEconomicasLayerRef.current.setVisible(newLayers.actividadesEconomicas);
+        refs.actividadesEconomicasLayerRef.current.setVisible(newLayers.actividadesEconomicas);
       } else if (layerName === 'actividadesAgropecuarias') {
-        actividadesAgropecuariasLayerRef.current.setVisible(newLayers.actividadesAgropecuarias);
+        refs.actividadesAgropecuariasLayerRef.current.setVisible(newLayers.actividadesAgropecuarias);
       }
 
       return newLayers;
@@ -92,15 +92,14 @@ const MapComponent = () => {
   return (
     <div className="map-container">
       <div ref={mapRef} className="map"></div>
-      <form>
-        <label htmlFor="type">Measurement type &nbsp;</label>
-        <select id="type">
-          <option value="length">Length (LineString)</option>
-          <option value="area">Area (Polygon)</option>
-        </select>
-      </form>
-      {mapRef.current && <MeasureComponent map={mapRef.current.map} />}
-      <LayersControl layers={layers} handleLayerChange={handleLayerChange} handleZoom={handleZoom} />
+      <Sidebar 
+        layers={layers} 
+        handleLayerChange={handleLayerChange} 
+        osmLayerRef={osmLayerRef}
+        actividadesEconomicasLayerRef={actividadesEconomicasLayerRef}
+        actividadesAgropecuariasLayerRef={actividadesAgropecuariasLayerRef}
+        handleZoom={handleZoom}
+      />
     </div>
   );
 };

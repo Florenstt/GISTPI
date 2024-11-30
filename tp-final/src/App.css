@@ -37,28 +37,10 @@
   }
 }
 
-.left-bar, .right-bar {
-  width: 200px; /* Ajusta el ancho según tus necesidades */
-  background-color: #f0f0f0; /* Color de fondo para distinguir las barras */
-}
 
-.left-bar {
-  position: fixed;
-  left: 0;
-  top: 0;
-  bottom: 0;
-}
-
-.right-bar {
-  position: fixed;
-  right: 0;
-  top: 0;
-  bottom: 0;
-}
 
 .map-container {
-  margin-left: 200px; /* Debe coincidir con el ancho de .left-bar */
-  margin-right: 200px; /* Debe coincidir con el ancho de .right-bar */
+  padding: 15px;
   flex-grow: 1;
   background-color: #e0e0e0; /* Color de fondo para distinguir el área del mapa */
   height: 100vh;
