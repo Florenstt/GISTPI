@@ -8,7 +8,7 @@ import ImageWMS from 'ol/source/ImageWMS.js';
 import 'ol/ol.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './MapComponent.css';
-import Sidebar from './Sidebar';
+import LayersControl from './LayersControl';
 
 const MapComponent = () => {
   const mapRef = useRef(null);
@@ -91,7 +91,7 @@ const MapComponent = () => {
   return (
     <div className="map-container">
       <div ref={mapRef} className="map"></div>
-      <Sidebar layers={layers} handleLayerChange={handleLayerChange} handleZoom={handleZoom} />
+      <LayersControl layers={layers} handleLayerChange={handleLayerChange} handleZoom={handleZoom} />
     </div>
   );
 };
