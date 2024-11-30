@@ -5,11 +5,11 @@ import MapComponent from './componentes/MapComponent';
 function App() {
   return (
     <div className="App">
-      <div className="content">
-        {/* Aquí va el contenido principal de tu aplicación */}
-        <h1>Contenido Principal</h1>
+      <div className="left-bar">Barra Izquierda</div>
+      <div className="map-container">
         <MapComponent />
       </div>
+      <div className="right-bar">Barra Derecha</div>
     </div>
   );
 }

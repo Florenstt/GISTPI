@@ -91,7 +91,7 @@ const MapComponent = () => {
 
   return (
     <div className="map-container">
-      <div ref={mapRef} className="map" style={{ width: '100%', height: '400px' }}></div>
+      <div ref={mapRef} className="map"></div>
       <form>
         <label htmlFor="type">Measurement type &nbsp;</label>
         <select id="type">
