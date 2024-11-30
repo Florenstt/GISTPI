@@ -72,6 +72,7 @@ const ScaleBarControl = ({ map }) => {
 
   return (
     <div className="scale-bar-control">
+        <h3>Scale Bar Control</h3>
       <label htmlFor="units">Units:</label>
       <select ref={unitsSelectRef} id="units">
         <option value="degrees">degrees</option>
