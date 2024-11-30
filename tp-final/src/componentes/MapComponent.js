@@ -11,6 +11,7 @@ import './MapComponent.css';
 import LayersControl from './LayersControl';
 import Sidebar from './Sidebar';
 import MeasureComponent from './MeasureComponent';
+import ScaleBarControl from './ScaleBarControl';
 
 const MapComponent = () => {
   const mapRef = useRef(null);
@@ -72,11 +73,11 @@ const MapComponent = () => {
     setLayers((prevLayers) => {
       const newLayers = { ...prevLayers, [layerName]: !prevLayers[layerName] };
 
-      if (layerName === 'osm') {
+      if (refs.osmLayerRef && layerName === 'osm') {
         refs.osmLayerRef.current.setVisible(newLayers.osm);
-      } else if (layerName === 'actividadesEconomicas') {
+      } else if (refs.actividadesEconomicasLayerRef && layerName === 'actividadesEconomicas') {
         refs.actividadesEconomicasLayerRef.current.setVisible(newLayers.actividadesEconomicas);
-      } else if (layerName === 'actividadesAgropecuarias') {
+      } else if (refs.actividadesAgropecuariasLayerRef && layerName === 'actividadesAgropecuarias') {
         refs.actividadesAgropecuariasLayerRef.current.setVisible(newLayers.actividadesAgropecuarias);
       }
 
@@ -102,6 +103,7 @@ const MapComponent = () => {
         actividadesAgropecuariasLayerRef={actividadesAgropecuariasLayerRef}
         handleZoom={handleZoom}
       />
+      <ScaleBarControl map={mapRef.current?.map} />
     </div>
   );
 };
