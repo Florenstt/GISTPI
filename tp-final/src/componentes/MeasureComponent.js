@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Draw from 'ol/interaction/Draw.js';
 import Overlay from 'ol/Overlay.js';
 import { LineString, Polygon } from 'ol/geom.js';
@@ -9,6 +9,8 @@ import { Vector as VectorLayer } from 'ol/layer.js';
 import { Fill, Stroke, Style, Circle as CircleStyle } from 'ol/style.js';
 
 const MeasureComponent = ({ map }) => {
+  const typeSelectRef = useRef(null);
+
   useEffect(() => {
     if (!map) return;
 
@@ -111,8 +113,7 @@ const MeasureComponent = ({ map }) => {
 
     let draw;
     const addInteraction = () => {
-      const typeSelect = document.getElementById('type');
-      const type = typeSelect.value === 'area' ? 'Polygon' : 'LineString';
+      const type = typeSelectRef.current.value === 'area' ? 'Polygon' : 'LineString';
       draw = new Draw({
         source: source,
         type: type,
@@ -171,11 +172,12 @@ const MeasureComponent = ({ map }) => {
       });
     };
 
-    const typeSelect = document.getElementById('type');
-    typeSelect.onchange = function () {
-      map.removeInteraction(draw);
-      addInteraction();
-    };
+    if (typeSelectRef.current) {
+      typeSelectRef.current.onchange = function () {
+        map.removeInteraction(draw);
+        addInteraction();
+      };
+    }
 
     addInteraction();
 
@@ -185,7 +187,15 @@ const MeasureComponent = ({ map }) => {
     };
   }, [map]);
 
-  return null;
+  return (
+    <div className="sidebar">
+      <h2>Measurement Tools</h2>
+      <select ref={typeSelectRef}>
+        <option value="length">Length</option>
+        <option value="area">Area</option>
+      </select>
+    </div>
+  );
 };
 
 export default MeasureComponent;

@@ -10,6 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './MapComponent.css';
 import LayersControl from './LayersControl';
 import Sidebar from './Sidebar';
+import MeasureComponent from './MeasureComponent';
 
 const MapComponent = () => {
   const mapRef = useRef(null);
@@ -91,6 +92,7 @@ const MapComponent = () => {
 
   return (
     <div className="map-container">
+      <MeasureComponent map={mapRef.current?.map} />
       <div ref={mapRef} className="map"></div>
       <Sidebar 
         layers={layers} 
