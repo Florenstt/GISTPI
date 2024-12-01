@@ -178,6 +178,12 @@ const DrawComponent = ({ map }) => {
       map.removeInteraction(drawRef.current);
       map.removeOverlay(helpTooltipRef.current);
       map.removeOverlay(measureTooltipRef.current);
+      if (helpTooltipElementRef.current) {
+        helpTooltipElementRef.current.remove();
+      }
+      if (measureTooltipElementRef.current) {
+        measureTooltipElementRef.current.remove();
+      }
     };
   }, [map]);
 

@@ -26,6 +26,9 @@ function App() {
     if (map) {
       const layersToRemove = map.getLayers().getArray().filter(layer => layer.get('name') === 'drawLayer');
       layersToRemove.forEach(layer => map.removeLayer(layer));
+      // Remove tooltips
+      const tooltips = document.querySelectorAll('.ol-tooltip');
+      tooltips.forEach(tooltip => tooltip.remove());
     }
   };
 
