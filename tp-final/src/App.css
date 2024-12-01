@@ -41,9 +41,6 @@
 }
 
 .map-container {
-  flex-grow: 1;
-  background-color: #e0e0e0; /* Color de fondo para distinguir el área del mapa */
-  height: 80%;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -78,7 +75,6 @@ html, body, #root {
   background-color: #f4f4f4;
   padding: 10px;
   border-left: 1px solid #ccc;
-  border-right: none;
 }
 
 .col-10 {

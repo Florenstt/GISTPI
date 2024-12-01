@@ -12,6 +12,7 @@ const MapComponent = ({ onLayersUpdate, onMapUpdate }) => {
   const mapRef = useRef(null);
   const mapInitializedRef = useRef(false);
   const [layers, setLayers] = useState([]);
+  const [map, setMap] = useState(null);
 
   useEffect(() => {
     if (!mapInitializedRef.current) {
@@ -22,7 +23,7 @@ const MapComponent = ({ onLayersUpdate, onMapUpdate }) => {
 
       const additionalLayers = createLayers();
 
-      const map = new Map({
+      const mapInstance = new Map({
         layers: [tileLayer, ...additionalLayers],
         target: mapRef.current,
         view: new View({
@@ -32,6 +33,7 @@ const MapComponent = ({ onLayersUpdate, onMapUpdate }) => {
       });
 
       setLayers(additionalLayers); // Excluye la capa OSM de la lista de capas que se pueden ocultar
+      setMap(mapInstance);
       mapInitializedRef.current = true;
 
       if (onLayersUpdate) {
@@ -39,7 +41,7 @@ const MapComponent = ({ onLayersUpdate, onMapUpdate }) => {
       }
 
       if (onMapUpdate) {
-        onMapUpdate(map);
+        onMapUpdate(mapInstance);
       }
     }
   }, [onLayersUpdate, onMapUpdate]);
