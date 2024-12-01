@@ -1,10 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import NavBar from './componentes/NavBar';
-import Sidebar from './componentes/Sidebar';
-import MapComponent from './componentes/MapComponent';
-import ScaleBarControl from './componentes/ScaleBarControl';
+import Navbar from './componentes/NavBar'; // Asegúrate de que la ruta sea correcta
+import Sidebar from './componentes/Sidebar'; // Asegúrate de que la ruta sea correcta
+import MapComponent from './componentes/MapComponent'; // Asegúrate de que la ruta sea correcta
 
 function App() {
   const [layers, setLayers] = useState([]);
@@ -20,7 +19,7 @@ function App() {
 
   return (
     <div className="App">
-      <NavBar />
+      <Navbar map={map} />
       <div className="container-fluid main-content">
         <div className="row content-row">
           <div className="col-10 map-container">
@@ -31,7 +30,6 @@ function App() {
           </div>
         </div>
       </div>
-      {map && <ScaleBarControl map={map} />}
     </div>
   );
 }
