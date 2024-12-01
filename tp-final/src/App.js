@@ -4,7 +4,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from './componentes/NavBar';
 import Sidebar from './componentes/Sidebar';
 import MapComponent from './componentes/MapComponent';
-import DrawComponent from './componentes/DrawComponent';
 
 function App() {
   const [layers, setLayers] = useState([]);
@@ -25,12 +24,11 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar map={map} onDrawButtonClick={handleDrawButtonClick} />
+      <Navbar map={map} isDrawing={isDrawing} onDrawButtonClick={handleDrawButtonClick} />
       <div className="container-fluid main-content">
         <div className="row content-row">
           <div className="col-10 map-container">
             <MapComponent onLayersUpdate={handleLayersUpdate} onMapUpdate={handleMapUpdate} />
-            {map && isDrawing && <DrawComponent map={map} />}
           </div>
           <div className="col-2 sidebar-container">
             <Sidebar layers={layers} />
