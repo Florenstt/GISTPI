@@ -3,13 +3,16 @@ import Map from 'ol/Map.js';
 import View from 'ol/View.js';
 import TileLayer from 'ol/layer/Tile.js';
 import ImageLayer from 'ol/layer/Image.js';
-import VectorLayer from 'ol/layer/Vector.js';
+import { Vector as VectorLayer } from 'ol/layer';
 import OSM from 'ol/source/OSM.js';
 import ImageWMS from 'ol/source/ImageWMS.js';
-import VectorSource from 'ol/source/Vector.js';
+import { Vector as VectorSource } from 'ol/source';
 import GeoJSON from 'ol/format/GeoJSON.js';
 import Select from 'ol/interaction/Select.js';
 import { click } from 'ol/events/condition.js';
+import Style from 'ol/style/Style';
+import Fill from 'ol/style/Fill';
+import Stroke from 'ol/style/Stroke';
 import 'ol/ol.css';
 import './MapComponent.css';
 
@@ -40,7 +43,7 @@ export const createLayers = () => {
 };
 
 const LayersComponent = () => {
-  const mapRef = useRef(null);
+  const mapRef = useRef();
 
   useEffect(() => {
     const layers = createLayers();
@@ -57,6 +60,50 @@ const LayersComponent = () => {
         center: [0, 0],
         zoom: 2
       })
+    });
+
+    const vectorLayer = new VectorLayer({
+      source: new VectorSource({
+        url: 'https://openlayers.org/data/vector/ecoregions.json',
+        format: new GeoJSON(),
+      }),
+      style: new Style({
+        fill: new Fill({
+          color: '#eeeeee',
+        }),
+      }),
+    });
+
+    map.addLayer(vectorLayer);
+
+    const selectStyle = new Style({
+      fill: new Fill({
+        color: '#eeeeee',
+      }),
+      stroke: new Stroke({
+        color: 'rgba(255, 255, 255, 0.7)',
+        width: 2,
+      }),
+    });
+
+    const select = new Select({
+      condition: click,
+      style: function (feature) {
+        selectStyle.getFill().setColor(feature.get('COLOR') || '#eeeeee');
+        return selectStyle;
+      },
+    });
+
+    map.addInteraction(select);
+
+    select.on('select', function (e) {
+      const status = document.getElementById('status');
+      if (e.selected.length > 0) {
+        const feature = e.selected[0];
+        status.innerHTML = feature.get('ECO_NAME') || 'No name';
+      } else {
+        status.innerHTML = ' ';
+      }
     });
 
     const selectClick = new Select({
@@ -98,7 +145,12 @@ const LayersComponent = () => {
     return () => map.setTarget(null);
   }, []);
 
-  return <div ref={mapRef} className="map" />;
+  return (
+    <div>
+      <div ref={mapRef} className="map" />
+      <div id="status" />
+    </div>
+  );
 };
 
 export default LayersComponent;
