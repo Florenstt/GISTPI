@@ -4,7 +4,14 @@ import { Dropdown } from 'react-bootstrap';
 import ScaleBarControl from './ScaleBarControl'; // Asegúrate de que la ruta sea correcta
 import DrawComponent from './DrawComponent'; // Asegúrate de que la ruta sea correcta
 
-const Navbar = ({ map, isDrawing, onDrawButtonClick }) => {
+const Navbar = ({ map, isDrawing, onDrawButtonClick, onClearDrawings }) => {
+  const handleDrawButtonClick = () => {
+    if (isDrawing) {
+      onClearDrawings();
+    }
+    onDrawButtonClick();
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <a className="navbar-brand" href="#">Navbar</a>
@@ -22,10 +29,10 @@ const Navbar = ({ map, isDrawing, onDrawButtonClick }) => {
           <li className="nav-item dropdown">
             <Dropdown>
               <Dropdown.Toggle variant="secondary" id="dropdown-basic">
-                Button 3
+                Medir
               </Dropdown.Toggle>
               <Dropdown.Menu>
-                <Dropdown.Item onClick={onDrawButtonClick}>
+                <Dropdown.Item onClick={handleDrawButtonClick}>
                   {isDrawing ? 'Stop Drawing' : 'Start Drawing'}
                 </Dropdown.Item>
                 {map && isDrawing && <DrawComponent map={map} />}
@@ -35,7 +42,7 @@ const Navbar = ({ map, isDrawing, onDrawButtonClick }) => {
           <li className="nav-item dropdown">
             <Dropdown>
               <Dropdown.Toggle variant="secondary" id="dropdown-basic">
-                Scale Bar
+                Escala
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 <ScaleBarControl map={map} />

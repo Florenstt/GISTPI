@@ -1,12 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import Draw from 'ol/interaction/Draw.js';
-import Map from 'ol/Map.js';
 import Overlay from 'ol/Overlay.js';
-import View from 'ol/View.js';
 import { Circle as CircleStyle, Fill, Stroke, Style } from 'ol/style.js';
 import { LineString, Polygon } from 'ol/geom.js';
-import { OSM, Vector as VectorSource } from 'ol/source.js';
-import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer.js';
+import { Vector as VectorSource } from 'ol/source.js';
+import { Vector as VectorLayer } from 'ol/layer.js';
 import { getArea, getLength } from 'ol/sphere.js';
 import { unByKey } from 'ol/Observable.js';
 
@@ -40,6 +38,7 @@ const DrawComponent = ({ map }) => {
           }),
         }),
       }),
+      name: 'drawLayer', // Assign a name to the layer
     });
 
     map.addLayer(vector);
@@ -162,6 +161,9 @@ const DrawComponent = ({ map }) => {
         measureTooltipElementRef.current = null;
         createMeasureTooltip();
         unByKey(listener);
+
+        // Clear the drawn features
+        source.clear();
       });
     };
 

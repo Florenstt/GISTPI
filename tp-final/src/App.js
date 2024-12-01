@@ -22,9 +22,16 @@ function App() {
     setIsDrawing(!isDrawing);
   };
 
+  const handleClearDrawings = () => {
+    if (map) {
+      const layersToRemove = map.getLayers().getArray().filter(layer => layer.get('name') === 'drawLayer');
+      layersToRemove.forEach(layer => map.removeLayer(layer));
+    }
+  };
+
   return (
     <div className="App">
-      <Navbar map={map} isDrawing={isDrawing} onDrawButtonClick={handleDrawButtonClick} />
+      <Navbar map={map} isDrawing={isDrawing} onDrawButtonClick={handleDrawButtonClick} onClearDrawings={handleClearDrawings} />
       <div className="container-fluid main-content">
         <div className="row content-row">
           <div className="col-10 map-container">
