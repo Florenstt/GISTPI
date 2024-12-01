@@ -2,4 +2,6 @@ funcionamiento general de la aplicacion: npm install
 dependencias de openlayers: npm install ol
 estilos de react: npm install react-bootstrap bootstrap
 
-solucion problema de CORS: npm install http-proxy-middleware --save
+inicia el servidor de react: npm start
+
+inicia el servidor de docker: docker-compose up
