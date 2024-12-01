@@ -1,0 +1,9 @@
+/* ScaleBarControl.css */
+#scaleBarOptions {
+  display: none;
+}
+
+.ol-scale-bar-inverted {
+  background-color: black;
+  color: white;
+}

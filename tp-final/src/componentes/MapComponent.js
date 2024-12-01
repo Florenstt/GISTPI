@@ -8,7 +8,7 @@ import 'ol/ol.css';
 import './MapComponent.css';
 import { createLayers } from './LayersComponent';
 
-const MapComponent = ({ onLayersUpdate }) => {
+const MapComponent = ({ onLayersUpdate, onMapUpdate }) => {
   const mapRef = useRef(null);
   const mapInitializedRef = useRef(false);
   const [layers, setLayers] = useState([]);
@@ -37,8 +37,12 @@ const MapComponent = ({ onLayersUpdate }) => {
       if (onLayersUpdate) {
         onLayersUpdate(additionalLayers); // Excluye la capa OSM de la lista de capas que se pueden ocultar
       }
+
+      if (onMapUpdate) {
+        onMapUpdate(map);
+      }
     }
-  }, [onLayersUpdate]);
+  }, [onLayersUpdate, onMapUpdate]);
 
   return (
     <div className="map-container">
