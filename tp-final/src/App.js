@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBar from './componentes/NavBar';
 import Sidebar from './componentes/Sidebar';
 import MapComponent from './componentes/MapComponent';
