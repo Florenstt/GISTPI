@@ -34,7 +34,7 @@ export const createLayers = () => {
     title: "Actividades Agropecuarias",
     visible: false, // Oculto por defecto
     source: new VectorSource({
-      url: 'http://localhost:8080/geoserver/TPI/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=TPI:actividades_agropecuarias&outputFormat=application/json',
+      url: 'http://localhost:8080/geoserver/TPI/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=TPI%3Aactividades_agropecuarias&outputFormat=application%2Fjson',
       format: new GeoJSON()
     })
   });
