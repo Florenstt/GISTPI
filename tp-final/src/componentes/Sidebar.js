@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Sidebar.css';
-import LegendComponent from './LegendComponent';
+import Legend from './Legend';
 
 const Sidebar = ({ layers }) => {
   const [visibleLayers, setVisibleLayers] = useState([]);
@@ -44,10 +44,7 @@ const Sidebar = ({ layers }) => {
           ))}
         </ul>
       </div>
-      <div className="legend-section">
-        <h3>Leyenda</h3>
-        <LegendComponent layers={visibleLayers} />
-      </div>
+      <Legend layers={visibleLayers} />
     </div>
   );
 };
