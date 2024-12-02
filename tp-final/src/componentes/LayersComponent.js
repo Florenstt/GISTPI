@@ -31,33 +31,34 @@ export const createLayers = () => {
 
   const actividadesAgropecuariasLayer = new VectorLayer({
     title: "Actividades Agropecuarias",
-    visible: false, // Oculto por defecto
+    visible: false,
     source: new VectorSource({
       url: 'http://localhost:8080/geoserver/TPI/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=TPI%3Aactividades_agropecuarias&outputFormat=application%2Fjson',
       format: new GeoJSON()
     }),
     style: function (feature) {
       // Define estilos basados en atributos
-      const actividad = feature.get('tipo'); // Cambia por el nombre del atributo
+      const actividad = feature.get('actividad'); // Cambia por el nombre del atributo
       let fillColor;
       switch (actividad) {
-        case 'Criadero':
-          fillColor = 'rgba(255, 100, 100)';
+        case 'Ganadería':
+          fillColor = 'rgba(255, 100, 100, 0.6)';
           break;
-        case 'Galpón, Criadero de Aves':
-          fillColor = 'rgba(100, 255, 100)';
+        case 'Agricultura':
+          fillColor = 'rgba(100, 255, 100, 0.6)';
           break;
-        case 'Vivero':
-          fillColor = 'rgba(100, 255, 100)';
-          break;  
         default:
-          fillColor = 'rgba(200, 200, 200)';
+          fillColor = 'rgba(200, 200, 200, 0.6)';
       }
       return new Style({
         image: new CircleStyle({
           radius: 5,
           fill: new Fill({
             color: fillColor,
+          }),
+          stroke: new Stroke({
+            color: '#333333',
+            width: 1,
           }),
         }),
       });
@@ -74,7 +75,7 @@ const LayersComponent = ({ setLayers }) => {
     const layers = createLayers();
     setLayers(layers.map(layer => ({
       title: layer.get('title'),
-      color: layer.get('color') || '#000' // Default color if not specified
+      color: layer.getStyle() ? layer.getStyle()().getImage().getFill().getColor() : '#000'
     })));
 
     const map = new Map({
