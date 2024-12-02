@@ -23,7 +23,8 @@ export const createLayers = () => {
       url: 'http://localhost:8080/geoserver/TPI/wms',
       params: {
         LAYERS: 'TPI:actividades_economicas',
-        TILED: true
+        TILED: true,
+        STYLES:'',
       },
       serverType: 'geoserver'
     })
