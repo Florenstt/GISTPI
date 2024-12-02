@@ -43,6 +43,9 @@ function App() {
           <div className="col-2 sidebar-container">
             <Sidebar layers={layers} />
           </div>
+          <div className="col-12 footer"> 
+            
+          </div>
         </div>
       </div>
     </div>
