@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Draw from 'ol/interaction/Draw.js';
 import Overlay from 'ol/Overlay.js';
 import { Circle as CircleStyle, Fill, Stroke, Style } from 'ol/style.js';
@@ -8,7 +8,7 @@ import { Vector as VectorLayer } from 'ol/layer.js';
 import { getArea, getLength } from 'ol/sphere.js';
 import { unByKey } from 'ol/Observable.js';
 
-const DrawComponent = ({ map }) => {
+const DrawComponent = ({ map, isDrawing }) => {
   const typeSelectRef = useRef(null);
   const helpTooltipElementRef = useRef(null);
   const measureTooltipElementRef = useRef(null);
@@ -16,11 +16,11 @@ const DrawComponent = ({ map }) => {
   const sketchRef = useRef(null);
   const helpTooltipRef = useRef(null);
   const measureTooltipRef = useRef(null);
+  const [source] = useState(new VectorSource());
 
   useEffect(() => {
     if (!map) return;
 
-    const source = new VectorSource();
     const vector = new VectorLayer({
       source: source,
       style: new Style({
@@ -38,7 +38,7 @@ const DrawComponent = ({ map }) => {
           }),
         }),
       }),
-      name: 'drawLayer', // Assign a name to the layer
+      name: 'drawLayer',
     });
 
     map.addLayer(vector);
@@ -54,14 +54,18 @@ const DrawComponent = ({ map }) => {
           helpMsg = 'Click to continue drawing the line';
         }
       }
-      helpTooltipElementRef.current.innerHTML = helpMsg;
-      helpTooltipRef.current.setPosition(evt.coordinate);
-      helpTooltipElementRef.current.classList.remove('hidden');
+      if (helpTooltipElementRef.current) {
+        helpTooltipElementRef.current.innerHTML = helpMsg;
+        helpTooltipRef.current.setPosition(evt.coordinate);
+        helpTooltipElementRef.current.classList.remove('hidden');
+      }
     };
 
     map.on('pointermove', pointerMoveHandler);
     map.getViewport().addEventListener('mouseout', () => {
-      helpTooltipElementRef.current.classList.add('hidden');
+      if (helpTooltipElementRef.current) {
+        helpTooltipElementRef.current.classList.add('hidden');
+      }
     });
 
     const formatLength = (line) => {
@@ -149,21 +153,22 @@ const DrawComponent = ({ map }) => {
             output = formatLength(geom);
             tooltipCoord = geom.getLastCoordinate();
           }
-          measureTooltipElementRef.current.innerHTML = output;
-          measureTooltipRef.current.setPosition(tooltipCoord);
+          if (measureTooltipElementRef.current) {
+            measureTooltipElementRef.current.innerHTML = output;
+            measureTooltipRef.current.setPosition(tooltipCoord);
+          }
         });
       });
 
       drawRef.current.on('drawend', () => {
-        measureTooltipElementRef.current.className = 'ol-tooltip ol-tooltip-static';
-        measureTooltipRef.current.setOffset([0, -7]);
+        if (measureTooltipElementRef.current) {
+          measureTooltipElementRef.current.className = 'ol-tooltip ol-tooltip-static';
+          measureTooltipRef.current.setOffset([0, -7]);
+        }
         sketchRef.current = null;
         measureTooltipElementRef.current = null;
         createMeasureTooltip();
         unByKey(listener);
-
-        // Clear the drawn features
-        source.clear();
       });
     };
 
@@ -172,7 +177,19 @@ const DrawComponent = ({ map }) => {
       addInteraction();
     };
 
-    addInteraction();
+    if (isDrawing) {
+      addInteraction();
+    } else {
+      map.removeInteraction(drawRef.current);
+      map.removeOverlay(helpTooltipRef.current);
+      map.removeOverlay(measureTooltipRef.current);
+      if (helpTooltipElementRef.current) {
+        helpTooltipElementRef.current.remove();
+      }
+      if (measureTooltipElementRef.current) {
+        measureTooltipElementRef.current.remove();
+      }
+    }
 
     return () => {
       map.removeInteraction(drawRef.current);
@@ -185,7 +202,7 @@ const DrawComponent = ({ map }) => {
         measureTooltipElementRef.current.remove();
       }
     };
-  }, [map]);
+  }, [map, isDrawing, source]);
 
   return (
     <div>
