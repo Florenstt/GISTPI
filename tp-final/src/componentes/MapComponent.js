@@ -48,7 +48,7 @@ const MapComponent = ({ onLayersUpdate, onMapUpdate }) => {
 
   return (
     <div className="map-container">
-      <div ref={mapRef} className="map" style={{ width: '100%', height: '100%' }}></div>
+      <div ref={mapRef} className="map" ></div>
     </div>
   );
 };

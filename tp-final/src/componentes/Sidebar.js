@@ -1,4 +1,3 @@
-// Sidebar.js
 import React, { useState, useEffect } from 'react';
 import './Sidebar.css';
 import LegendComponent from './LegendComponent';
