@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './Sidebar.css';
 import LegendComponent from './LegendComponent';
 
@@ -24,13 +25,21 @@ const Sidebar = ({ layers }) => {
     <div className="sidebar">
       <div className="layers-section">
         <h3>Capas</h3>
-        <ul>
+        <ul className="list-group">
           {layers.map((layer, index) => (
-            <li key={index}>
-              {layer.get('title')}
-              <button onClick={() => toggleLayerVisibility(layer)}>
-                {layer.getVisible() ? 'Ocultar' : 'Mostrar'}
-              </button>
+            <li key={index} className="list-group-item">
+              <div className="form-check form-switch">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  id={`flexSwitchCheck${index}`}
+                  checked={layer.getVisible()}
+                  onChange={() => toggleLayerVisibility(layer)}
+                />
+                <label className="form-check-label" htmlFor={`flexSwitchCheck${index}`}>
+                  {layer.get('title')}
+                </label>
+              </div>
             </li>
           ))}
         </ul>

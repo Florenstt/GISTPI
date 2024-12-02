@@ -17,7 +17,7 @@ import './MapComponent.css';
 export const createLayers = () => {
   const actividadesEconomicasLayer = new VectorLayer({
     title: "Actividades Económicas",
-    visible: true, // Asegúrate de que la capa esté visible
+    visible: false, // Asegúrate de que la capa esté visible
     source: new VectorSource({
       url: 'http://localhost:8080/geoserver/TPI/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=TPI%3Aactividades_economicas&outputFormat=application%2Fjson',
       format: new GeoJSON()
@@ -37,7 +37,7 @@ export const createLayers = () => {
 
   const actividadesAgropecuariasLayer = new VectorLayer({
     title: "Actividades Agropecuarias",
-    visible: true, // Asegúrate de que la capa esté visible
+    visible: false, // Asegúrate de que la capa esté visible
     source: new VectorSource({
       url: 'http://localhost:8080/geoserver/TPI/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=TPI%3Aactividades_agropecuarias&outputFormat=application%2Fjson',
       format: new GeoJSON()
@@ -57,7 +57,7 @@ export const createLayers = () => {
 
   const espejoDeAguaLayer = new TileLayer({
     title: "Espejo de Agua",
-    visible: true, // Asegúrate de que la capa esté visible
+    visible: false, // Asegúrate de que la capa esté visible
     source: new TileWMS({
       url: 'http://localhost:8080/geoserver/TPI/wms',
       params: {
@@ -70,7 +70,7 @@ export const createLayers = () => {
 
   const vegHidrofilaLayer = new TileLayer({
     title: "Vegetación Hidrófila",
-    visible: true, // Asegúrate de que la capa esté visible
+    visible: false, // Asegúrate de que la capa esté visible
     source: new TileWMS({
       url: 'http://localhost:8080/geoserver/TPI/wms',
       params: {

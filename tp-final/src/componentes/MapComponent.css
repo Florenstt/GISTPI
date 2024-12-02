@@ -1,7 +1,8 @@
 /* MapComponent.css */
 .map-container {
   display: flex;
-  height: 90%; /* Ajusta la altura según sea necesario */
+  height: 100%; /* Ajusta la altura según sea necesario */
+  margin: 0; /* Elimina los márgenes */
 }
 
 .map {
