@@ -31,6 +31,11 @@
   background-color: #555;
 }
 
+.navbar button.active {
+  background-color: #ffcc33; /* Color cuando la medición está habilitada */
+  color: black; /* Asegúrate de que el texto sea legible */
+}
+
 .navbar-section {
   position: absolute;
   top: 10px;
