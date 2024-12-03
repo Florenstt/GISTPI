@@ -1,0 +1,27 @@
+/* styles.css */
+.legend-section {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  z-index: 1000; /* Asegúrate de que la leyenda esté por encima del mapa */
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.legend-symbol {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+}
+
+.legend-title {
+  font-size: 14px;
+}
