@@ -1,9 +1,12 @@
 // Navbar.js
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from 'reactstrap';
+import AddAgroActivityComponent from './AddAgroActivityComponent'; // Importa el componente
 import './NavBar.css';
 
-const Navbar = ({ map, isDrawing, onDrawButtonClick, onClearLengthMeasurements, onClearAreaMeasurements, onAddAgroActivityClick, drawType, setDrawType }) => {
+const Navbar = ({ map, isDrawing, onDrawButtonClick, onClearLengthMeasurements, onClearAreaMeasurements, drawType, setDrawType }) => {
+  const [showAddAgroActivity, setShowAddAgroActivity] = useState(false); // Estado para controlar la visibilidad del modal
+
   const handleDrawButtonClick = (type) => {
     if (isDrawing && drawType === type) {
       if (type === 'length') {
@@ -34,10 +37,18 @@ const Navbar = ({ map, isDrawing, onDrawButtonClick, onClearLengthMeasurements, 
     }
   };
 
+  const handleAddAgroActivityClick = () => {
+    setShowAddAgroActivity(true);
+  };
+
+  const handleCloseAddAgroActivity = () => {
+    setShowAddAgroActivity(false);
+  };
+
   return (
     <div className="navbar-section">
       <div className="navbar-box">
-        <Button color="primary" onClick={onAddAgroActivityClick}>
+        <Button color="secondary" onClick={handleAddAgroActivityClick}>
           Agregar Actividad Agropecuaria
         </Button>
         <Button 
@@ -61,6 +72,11 @@ const Navbar = ({ map, isDrawing, onDrawButtonClick, onClearLengthMeasurements, 
           </Button>
         </div>
       </div>
+      <AddAgroActivityComponent
+        show={showAddAgroActivity}
+        handleClose={handleCloseAddAgroActivity}
+        map={map}
+      />
     </div>
   );
 };

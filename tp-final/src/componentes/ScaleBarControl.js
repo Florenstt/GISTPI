@@ -12,6 +12,7 @@ const ScaleBarControl = ({ map }) => {
   const scaleTextCheckboxRef = useRef(null);
   const invertColorsCheckboxRef = useRef(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [scaleType, setScaleType] = useState('scalebar'); // Estado para el tipo de escala
 
   const toggleDropdown = () => setDropdownOpen(prevState => !prevState);
 
@@ -25,7 +26,7 @@ const ScaleBarControl = ({ map }) => {
         return;
       }
 
-      if (typeSelectRef.current.value === 'scaleline') {
+      if (scaleType === 'scaleline') {
         control = new ScaleLine({
           units: unitsSelectRef.current.value,
         });
@@ -76,7 +77,10 @@ const ScaleBarControl = ({ map }) => {
       unitsSelectRef.current.addEventListener('change', onChangeUnit);
     }
     if (typeSelectRef.current) {
-      typeSelectRef.current.addEventListener('change', reconfigureScaleLine);
+      typeSelectRef.current.addEventListener('change', (e) => {
+        setScaleType(e.target.value);
+        reconfigureScaleLine();
+      });
     }
     if (stepsRangeRef.current) {
       stepsRangeRef.current.addEventListener('input', reconfigureScaleLine);
@@ -108,13 +112,12 @@ const ScaleBarControl = ({ map }) => {
         invertColorsCheckboxRef.current.removeEventListener('change', onInvertColorsChange);
       }
     };
-  }, [map, dropdownOpen]);
+  }, [map, dropdownOpen, scaleType]);
 
   return (
     <div className="scale-bar-container">
       <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
         <DropdownToggle caret>
-         
         </DropdownToggle>
         <DropdownMenu>
           <div className="scale-bar-options">
@@ -128,7 +131,7 @@ const ScaleBarControl = ({ map }) => {
             </label>
             <label>
               Type:
-              <select id="type" ref={typeSelectRef} defaultValue="scalebar">
+              <select id="type" ref={typeSelectRef} value={scaleType}>
                 <option value="scaleline">Scale Line</option>
                 <option value="scalebar">Scale Bar</option>
               </select>
