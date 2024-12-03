@@ -11,6 +11,7 @@ function App() {
   const [layers, setLayers] = useState(createLayers());
   const [map, setMap] = useState(null);
   const [isDrawing, setIsDrawing] = useState(false);
+  const [showAddAgroActivity, setShowAddAgroActivity] = useState(false); // Estado para controlar el modal
 
   const handleLayersUpdate = (newLayers) => {
     setLayers(newLayers);
@@ -34,6 +35,14 @@ function App() {
     }
   };
 
+  const handleAddAgroActivityClick = () => {
+    setShowAddAgroActivity(true);
+  };
+
+  const handleCloseAddAgroActivity = () => {
+    setShowAddAgroActivity(false);
+  };
+
   const toggleLayerVisibility = (layer) => {
     const visibility = layer.getVisible();
     layer.setVisible(!visibility);
@@ -42,17 +51,25 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar map={map} isDrawing={isDrawing} onDrawButtonClick={handleDrawButtonClick} onClearDrawings={handleClearDrawings} />
+      <Navbar 
+        map={map} 
+        isDrawing={isDrawing} 
+        onDrawButtonClick={handleDrawButtonClick} 
+        onClearDrawings={handleClearDrawings} 
+        onAddAgroActivityClick={handleAddAgroActivityClick} // Pasa la función al Navbar
+      />
       <div className="container-fluid main-content">
         <div className="row content-row">
-          <div className="col-10">
+          <div className="col-12 map-container">
             <MapComponent onLayersUpdate={handleLayersUpdate} onMapUpdate={handleMapUpdate} />
-            <Legend layers={layers} />
-            <Sidebar layers={layers} onLayerToggle={toggleLayerVisibility} />
           </div>
-          
+          <div className="col-12 footer"> 
+            <Legend layers={layers} />
+          </div>
         </div>
       </div>
+      <Sidebar layers={layers} onLayerToggle={toggleLayerVisibility} />
+      
     </div>
   );
 }
