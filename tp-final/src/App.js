@@ -6,6 +6,8 @@ import Sidebar from './componentes/Sidebar';
 import MapComponent from './componentes/MapComponent';
 import Legend from './componentes/Legend';
 import ScaleBarControl from './componentes/ScaleBarControl';
+import LengthMeasurement from './componentes/LengthMeasurement';
+import AreaMeasurement from './componentes/AreaMeasurement';
 import { createLayers } from './componentes/LayersComponent';
 
 function App() {
@@ -83,6 +85,8 @@ function App() {
         </div>
       </div>
       <Sidebar layers={layers} onLayerToggle={handleLayerToggle} />
+      {map && isDrawing && drawType === 'length' && <LengthMeasurement map={map} isDrawing={isDrawing} />}
+      {map && isDrawing && drawType === 'area' && <AreaMeasurement map={map} isDrawing={isDrawing} />}
       {map && <ScaleBarControl map={map} />}
     </div>
   );
