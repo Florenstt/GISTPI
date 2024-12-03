@@ -6,7 +6,6 @@ const Legend = ({ layers }) => {
   const activeLayer = layers.find(layer => layer.get('active'));
   const visibleLayers = layers.filter(layer => layer.getVisible());
 
-  // Solo renderiza la leyenda si hay al menos una capa visible
   if (visibleLayers.length === 0) {
     return null;
   }

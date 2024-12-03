@@ -1,31 +1,53 @@
 /* Sidebar.css */
 .sidebar {
-  height: 100%;
-  background-color: #f4f4f4;
-  border-right: 1px solid #ccc;
-  margin: 0; /* Añadido */
-  padding: 0; /* Añadido */
+  position: fixed;
+  top: 50px;
+  right: 0px;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  z-index: 1000; /* Asegúrate de que el sidebar esté por encima del mapa */
 }
 
 .sidebar h3 {
   margin-top: 0;
-  margin-bottom: 0; /* Añadido */
+  margin-bottom: 0;
 }
 
 .sidebar ul {
   list-style-type: none;
   padding: 0;
-  margin: 0; /* Añadido */
+  margin: 0;
 }
 
 .sidebar li {
-  margin-bottom: 0; /* Modificado */
+  margin-bottom: 0;
 }
 
-.sidebar-container {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  margin: 0; /* Añadido */
-  padding: 0; /* Añadido */
+.layers-section h3 {
+  margin: 0;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+}
+
+.list-group {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0 0;
+}
+
+.list-group-item {
+  padding: 10px;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.form-check-input {
+  margin-right: 10px;
+}
+
+.dropdown-menu-scrollable {
+  max-height: 200px; /* Ajusta la altura máxima según tus necesidades */
+  overflow-y: scroll;
 }

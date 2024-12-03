@@ -3,6 +3,8 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
+  position: relative;
+  width: 100vw;
 }
 
 .App-logo {
@@ -46,6 +48,9 @@
   flex-direction: column;
   margin: 0;
   padding: 0;
+  width: 100%;
+  position: relative;
+  height: 100%;
 }
 
 html, body, #root {
@@ -61,6 +66,10 @@ html, body, #root {
   flex: 1;
 }
 
+.container-fluid.main-content {
+  height: calc(100% - 56px); /* Ajusta según la altura de tu navbar */
+}
+
 .row {
   flex-grow: 1;
   flex: 1;
@@ -72,21 +81,10 @@ html, body, #root {
   height: 100%;
 }
 
-.sidebar {
-  height: 100%;
-  background-color: #f4f4f4;
-  padding: 10px;
-  border-left: 1px solid #ccc;
-}
-
 .col-10 {
   flex: 1;
   display: flex;
   flex-direction: column;
-}
-
-.col-2 {
-  width: 250px; /* Ajusta el ancho de la barra lateral según sea necesario */
 }
 
 .navbar {
@@ -105,7 +103,12 @@ html, body, #root {
   overflow: hidden;
 }
 
-.sidebar-container {
-  width: 250px; /* Ajusta el ancho de la barra lateral según sea necesario */
-  overflow-y: auto;
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
 }

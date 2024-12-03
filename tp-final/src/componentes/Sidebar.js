@@ -1,50 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { useState } from 'react';
+import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import './Sidebar.css';
-import Legend from './Legend';
 
-const Sidebar = ({ layers }) => {
-  const [visibleLayers, setVisibleLayers] = useState([]);
+const Sidebar = ({ layers, onLayerToggle }) => {
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  useEffect(() => {
-    const initialVisibleLayers = layers.filter(layer => layer.getVisible());
-    setVisibleLayers(initialVisibleLayers);
-  }, [layers]);
-
-  const toggleLayerVisibility = (layer) => {
-    const visibility = layer.getVisible();
-    layer.setVisible(!visibility);
-    if (!visibility) {
-      setVisibleLayers([...visibleLayers, layer]);
-    } else {
-      setVisibleLayers(visibleLayers.filter(l => l !== layer));
-    }
-  };
+  const toggleDropdown = () => setDropdownOpen(prevState => !prevState);
 
   return (
     <div className="sidebar">
-      <div className="layers-section">
-        <h3>Capas</h3>
-        <ul className="list-group">
+      <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
+        <DropdownToggle caret>
+          Capas
+        </DropdownToggle>
+        <DropdownMenu className="dropdown-menu-scrollable">
           {layers.map((layer, index) => (
-            <li key={index} className="list-group-item">
-              <div className="form-check form-switch">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id={`flexSwitchCheck${index}`}
-                  checked={layer.getVisible()}
-                  onChange={() => toggleLayerVisibility(layer)}
-                />
-                <label className="form-check-label" htmlFor={`flexSwitchCheck${index}`}>
-                  {layer.get('title')}
-                </label>
-              </div>
-            </li>
+            <DropdownItem key={index} onClick={() => onLayerToggle(layer)}>
+              {layer.get('title')}
+              {layer.getVisible() ? ' (Visible)' : ''}
+            </DropdownItem>
           ))}
-        </ul>
-      </div>
-      <Legend layers={visibleLayers} />
+        </DropdownMenu>
+      </Dropdown>
     </div>
   );
 };

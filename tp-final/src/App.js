@@ -4,9 +4,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from './componentes/NavBar';
 import Sidebar from './componentes/Sidebar';
 import MapComponent from './componentes/MapComponent';
+import Legend from './componentes/Legend';
+import { createLayers } from './componentes/LayersComponent';
 
 function App() {
-  const [layers, setLayers] = useState([]);
+  const [layers, setLayers] = useState(createLayers());
   const [map, setMap] = useState(null);
   const [isDrawing, setIsDrawing] = useState(false);
 
@@ -32,6 +34,12 @@ function App() {
     }
   };
 
+  const toggleLayerVisibility = (layer) => {
+    const visibility = layer.getVisible();
+    layer.setVisible(!visibility);
+    setLayers([...layers]);
+  };
+
   return (
     <div className="App">
       <Navbar map={map} isDrawing={isDrawing} onDrawButtonClick={handleDrawButtonClick} onClearDrawings={handleClearDrawings} />
@@ -40,14 +48,12 @@ function App() {
           <div className="col-10 map-container">
             <MapComponent onLayersUpdate={handleLayersUpdate} onMapUpdate={handleMapUpdate} />
           </div>
-          <div className="col-2 sidebar-container">
-            <Sidebar layers={layers} />
-          </div>
           <div className="col-12 footer"> 
-            
+            <Legend layers={layers} />
           </div>
         </div>
       </div>
+      <Sidebar layers={layers} onLayerToggle={toggleLayerVisibility} />
     </div>
   );
 }
