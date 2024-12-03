@@ -19,9 +19,12 @@ const Sidebar = ({ layers, onLayerToggle }) => {
         </DropdownToggle>
         <DropdownMenu className="dropdown-menu-scrollable">
           {layers.map((layer, index) => (
-            <DropdownItem key={index} onClick={() => onLayerToggle(layer)}>
+            <DropdownItem 
+              key={index} 
+              onClick={() => onLayerToggle(layer)} 
+              className={layer.getVisible() ? 'layer-visible' : ''}
+            >
               {layer.get('title')}
-              {layer.getVisible() ? ' (Visible)' : ''}
             </DropdownItem>
           ))}
         </DropdownMenu>

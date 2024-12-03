@@ -22,6 +22,11 @@
   margin-bottom: 0;
 }
 
+.sidebar .dropdown-menu-scrollable {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
 .layers-section h3 {
   margin: 0;
   padding: 10px;
@@ -45,7 +50,6 @@
   margin-right: 10px;
 }
 
-.dropdown-menu-scrollable {
-  max-height: 200px; /* Ajusta la altura máxima según tus necesidades */
-  overflow-y: scroll;
+.layer-visible {
+  background-color: #d3d3d3 !important; /* Color gris para las capas visibles */
 }
