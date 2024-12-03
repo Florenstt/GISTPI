@@ -8,8 +8,7 @@ import { Vector as VectorLayer } from 'ol/layer.js';
 import { getArea, getLength } from 'ol/sphere.js';
 import { unByKey } from 'ol/Observable.js';
 
-const DrawComponent = ({ map, isDrawing }) => {
-  const typeSelectRef = useRef(null);
+const DrawComponent = ({ map, isDrawing, type }) => {
   const helpTooltipElementRef = useRef(null);
   const measureTooltipElementRef = useRef(null);
   const drawRef = useRef(null);
@@ -109,10 +108,10 @@ const DrawComponent = ({ map, isDrawing }) => {
     };
 
     const addInteraction = () => {
-      const type = typeSelectRef.current.value === 'area' ? 'Polygon' : 'LineString';
+      const drawType = type === 'area' ? 'Polygon' : 'LineString';
       drawRef.current = new Draw({
         source: source,
-        type: type,
+        type: drawType,
         style: new Style({
           fill: new Fill({
             color: 'rgba(255, 255, 255, 0.2)',
@@ -172,11 +171,6 @@ const DrawComponent = ({ map, isDrawing }) => {
       });
     };
 
-    typeSelectRef.current.onchange = () => {
-      map.removeInteraction(drawRef.current);
-      addInteraction();
-    };
-
     if (isDrawing) {
       addInteraction();
     } else {
@@ -202,16 +196,9 @@ const DrawComponent = ({ map, isDrawing }) => {
         measureTooltipElementRef.current.remove();
       }
     };
-  }, [map, isDrawing, source]);
+  }, [map, isDrawing, source, type]);
 
-  return (
-    <div>
-      <select ref={typeSelectRef} id="type">
-        <option value="length">Length</option>
-        <option value="area">Area</option>
-      </select>
-    </div>
-  );
+  return null;
 };
 
 export default DrawComponent;

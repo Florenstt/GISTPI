@@ -46,7 +46,6 @@ function App() {
     }
   };
 
-  
 
   return (
     <div className="App">
@@ -54,8 +53,8 @@ function App() {
         map={map} 
         isDrawing={isDrawing} 
         onDrawButtonClick={handleDrawButtonClick} 
-        onClearLengthMeasurements={handleClearLengthMeasurements} 
-        onClearAreaMeasurements={handleClearAreaMeasurements} 
+        onClearLengthMeasurements={handleClearLengthMeasurements}
+        onClearAreaMeasurements={handleClearAreaMeasurements}
         drawType={drawType}
         setDrawType={setDrawType}
       />

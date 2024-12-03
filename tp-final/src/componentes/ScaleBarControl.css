@@ -1,13 +1,15 @@
 /* ScaleBarControl.css */
-.scale-bar-options {
+.scale-bar-container {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  bottom: 50px;
+  left: 10px;
+  z-index: 1000; /* Asegúrate de que el control de escala esté por encima del mapa */
+}
+
+.scale-bar-options {
   background-color: rgba(255, 255, 255, 0.8);
   padding: 10px;
   border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  z-index: 1000; /* Asegúrate de que el control de escala esté por encima del mapa */
 }
 
 .scale-bar-options label {
@@ -19,9 +21,4 @@
 .scale-bar-options input[type="range"],
 .scale-bar-options input[type="checkbox"] {
   margin-left: 10px;
-}
-
-.ol-scale-bar-inverted {
-  background-color: black;
-  color: white;
 }
