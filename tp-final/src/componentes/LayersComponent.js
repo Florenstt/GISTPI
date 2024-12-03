@@ -15,49 +15,40 @@ import { fromLonLat } from 'ol/proj';
 import './MapComponent.css';
 
 export const createLayers = () => {
-  const actividadesEconomicasLayer = new VectorLayer({
-    title: "Actividades Económicas",
-    visible: false, // Asegúrate de que la capa esté visible
-    source: new VectorSource({
-      url: 'http://localhost:8080/geoserver/TPI/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=TPI%3Aactividades_economicas&outputFormat=application%2Fjson',
-      format: new GeoJSON()
-    }),
-    style: new Style({
-      image: new CircleStyle({
-        radius: 5,
-        fill: new Fill({
-          color: 'rgba(0, 0, 255, 0.5)'
-        }),
-        stroke: new Stroke({
-          color: 'rgba(0, 0, 255, 1)'
-        })
-      })
+
+  const actividadesAgropecuariasLayer = new TileLayer({
+    title: "Actividades Agropecuarias",
+    visible: false,
+    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:actividades_agropecuarias',
+    source: new TileWMS({
+      url: 'http://localhost:8080/geoserver/TPI/wms',
+      params: {
+        LAYERS: 'TPI:actividades_agropecuarias',
+        TILED: true,
+        STYLE: ''
+      },
+      serverType: 'geoserver'
     })
   });
 
-  const actividadesAgropecuariasLayer = new VectorLayer({
-    title: "Actividades Agropecuarias",
-    visible: false, // Asegúrate de que la capa esté visible
-    source: new VectorSource({
-      url: 'http://localhost:8080/geoserver/TPI/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=TPI%3Aactividades_agropecuarias&outputFormat=application%2Fjson',
-      format: new GeoJSON()
-    }),
-    style: new Style({
-      image: new CircleStyle({
-        radius: 5,
-        fill: new Fill({
-          color: 'rgba(255, 0, 0, 0.5)'
-        }),
-        stroke: new Stroke({
-          color: 'rgba(255, 0, 0, 1)'
-        })
-      })
+  const actividadesEconomicasLayer = new TileLayer({
+    title: "Actividades Económicas",
+    visible: false,
+    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:actividades_economicas',
+    source: new TileWMS({
+      url: 'http://localhost:8080/geoserver/TPI/wms',
+      params: {
+        LAYERS: 'TPI:actividades_economicas',
+        TILED: true
+      },
+      serverType: 'geoserver'
     })
   });
 
   const espejoDeAguaLayer = new TileLayer({
     title: "Espejo de Agua",
-    visible: false, // Asegúrate de que la capa esté visible
+    visible: false,
+    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:espejo_de_agua_hid',
     source: new TileWMS({
       url: 'http://localhost:8080/geoserver/TPI/wms',
       params: {
@@ -70,7 +61,8 @@ export const createLayers = () => {
 
   const vegHidrofilaLayer = new TileLayer({
     title: "Vegetación Hidrófila",
-    visible: false, // Asegúrate de que la capa esté visible
+    visible: false,
+    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:veg_hidrofila',
     source: new TileWMS({
       url: 'http://localhost:8080/geoserver/TPI/wms',
       params: {
