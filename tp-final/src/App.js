@@ -11,6 +11,7 @@ function App() {
   const [layers, setLayers] = useState(createLayers());
   const [map, setMap] = useState(null);
   const [isDrawing, setIsDrawing] = useState(false);
+  const [drawType, setDrawType] = useState(null);
   const [showAddAgroActivity, setShowAddAgroActivity] = useState(false); // Estado para controlar el modal
 
   const handleLayersUpdate = (newLayers) => {
@@ -43,12 +44,6 @@ function App() {
     setShowAddAgroActivity(false);
   };
 
-  const toggleLayerVisibility = (layer) => {
-    const visibility = layer.getVisible();
-    layer.setVisible(!visibility);
-    setLayers([...layers]);
-  };
-
   return (
     <div className="App">
       <Navbar 
@@ -56,7 +51,9 @@ function App() {
         isDrawing={isDrawing} 
         onDrawButtonClick={handleDrawButtonClick} 
         onClearDrawings={handleClearDrawings} 
-        onAddAgroActivityClick={handleAddAgroActivityClick} // Pasa la función al Navbar
+        onAddAgroActivityClick={handleAddAgroActivityClick} 
+        drawType={drawType}
+        setDrawType={setDrawType}
       />
       <div className="container-fluid main-content">
         <div className="row content-row">
@@ -68,7 +65,7 @@ function App() {
           </div>
         </div>
       </div>
-      <Sidebar layers={layers} onLayerToggle={toggleLayerVisibility} />
+      <Sidebar layers={layers} onLayerToggle={handleLayersUpdate} />
       
     </div>
   );
