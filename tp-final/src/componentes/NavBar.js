@@ -41,17 +41,19 @@ const Navbar = ({ map, isDrawing, onDrawButtonClick, onClearLengthMeasurements, 
           Agregar Actividad Agropecuaria
         </Button>
         <Button color="secondary" onClick={() => handleDrawButtonClick('length')}>
-          {isDrawing && drawType === 'length' ? 'Stop Length Measurement' : 'Start Length Measurement'}
+          <i className="fa-solid fa-ruler"></i> {isDrawing && drawType === 'length' ? 'Stop Length Measurement' : 'Start Length Measurement'}
         </Button>
         <Button color="secondary" onClick={() => handleDrawButtonClick('area')}>
-          {isDrawing && drawType === 'area' ? 'Stop Area Measurement' : 'Start Area Measurement'}
+          <i className="fa-solid fa-ruler"></i> {isDrawing && drawType === 'area' ? 'Stop Area Measurement' : 'Start Area Measurement'}
         </Button>
-        <Button color="secondary" onClick={handleZoomIn}>
-          Zoom In
-        </Button>
-        <Button color="secondary" onClick={handleZoomOut}>
-          Zoom Out
-        </Button>
+        <div className="zoom-buttons">
+          <Button color="secondary" onClick={handleZoomIn}>
+            <i className="bi bi-zoom-in"></i>
+          </Button>
+          <Button color="secondary" onClick={handleZoomOut}>
+            <i className="bi bi-zoom-out"></i>
+          </Button>
+        </div>
       </div>
     </div>
   );

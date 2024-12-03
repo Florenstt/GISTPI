@@ -15,3 +15,7 @@ correr el servidor: node servers.js
 instalar axios: npm install axios
 
 instalar proj4: npm install proj4
+
+iconos de bootstrap: npm install bootstrap-icons
+
+iconos de fontawesome: npm install @fortawesome/fontawesome-free

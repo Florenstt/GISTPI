@@ -114,7 +114,7 @@ const ScaleBarControl = ({ map }) => {
     <div className="scale-bar-container">
       <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
         <DropdownToggle caret>
-          Controles de Escala
+         
         </DropdownToggle>
         <DropdownMenu>
           <div className="scale-bar-options">
