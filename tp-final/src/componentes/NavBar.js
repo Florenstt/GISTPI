@@ -1,8 +1,6 @@
 // Navbar.js
 import React from 'react';
 import { Button } from 'reactstrap';
-import LengthMeasurement from './LengthMeasurement';
-import AreaMeasurement from './AreaMeasurement';
 import './NavBar.css';
 
 const Navbar = ({ map, isDrawing, onDrawButtonClick, onClearLengthMeasurements, onClearAreaMeasurements, onAddAgroActivityClick, drawType, setDrawType }) => {
@@ -20,6 +18,22 @@ const Navbar = ({ map, isDrawing, onDrawButtonClick, onClearLengthMeasurements, 
     onDrawButtonClick();
   };
 
+  const handleZoomIn = () => {
+    if (map) {
+      const view = map.getView();
+      const zoom = view.getZoom();
+      view.setZoom(zoom + 1);
+    }
+  };
+
+  const handleZoomOut = () => {
+    if (map) {
+      const view = map.getView();
+      const zoom = view.getZoom();
+      view.setZoom(zoom - 1);
+    }
+  };
+
   return (
     <div className="navbar-section">
       <div className="navbar-box">
@@ -32,8 +46,12 @@ const Navbar = ({ map, isDrawing, onDrawButtonClick, onClearLengthMeasurements, 
         <Button color="secondary" onClick={() => handleDrawButtonClick('area')}>
           {isDrawing && drawType === 'area' ? 'Stop Area Measurement' : 'Start Area Measurement'}
         </Button>
-        {map && isDrawing && drawType === 'length' && <LengthMeasurement map={map} isDrawing={isDrawing} />}
-        {map && isDrawing && drawType === 'area' && <AreaMeasurement map={map} isDrawing={isDrawing} />}
+        <Button color="secondary" onClick={handleZoomIn}>
+          Zoom In
+        </Button>
+        <Button color="secondary" onClick={handleZoomOut}>
+          Zoom Out
+        </Button>
       </div>
     </div>
   );
