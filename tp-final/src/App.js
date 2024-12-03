@@ -45,15 +45,14 @@ function App() {
       <Navbar map={map} isDrawing={isDrawing} onDrawButtonClick={handleDrawButtonClick} onClearDrawings={handleClearDrawings} />
       <div className="container-fluid main-content">
         <div className="row content-row">
-          <div className="col-10 map-container">
+          <div className="col-10">
             <MapComponent onLayersUpdate={handleLayersUpdate} onMapUpdate={handleMapUpdate} />
-          </div>
-          <div className="col-12 footer"> 
             <Legend layers={layers} />
+            <Sidebar layers={layers} onLayerToggle={toggleLayerVisibility} />
           </div>
+          
         </div>
       </div>
-      <Sidebar layers={layers} onLayerToggle={toggleLayerVisibility} />
     </div>
   );
 }

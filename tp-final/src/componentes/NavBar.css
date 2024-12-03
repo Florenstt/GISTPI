@@ -4,8 +4,11 @@
   height: 50px; /* Ajusta la altura de la barra superior */
   display: flex;
   justify-content: space-around;
-  background-color: #333;
-  padding: 1rem;
+  background-color: #ff3838;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1000; /* Asegura que la barra esté por encima del mapa */
 }
 
 .navbar .btn-link {
