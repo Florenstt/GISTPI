@@ -5,6 +5,7 @@ import Navbar from './componentes/NavBar';
 import Sidebar from './componentes/Sidebar';
 import MapComponent from './componentes/MapComponent';
 import Legend from './componentes/Legend';
+import ScaleBarControl from './componentes/ScaleBarControl';
 import { createLayers } from './componentes/LayersComponent';
 
 function App() {
@@ -12,7 +13,7 @@ function App() {
   const [map, setMap] = useState(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [drawType, setDrawType] = useState(null);
-  
+
   const handleLayersUpdate = (newLayers) => {
     setLayers(newLayers);
   };
@@ -69,7 +70,7 @@ function App() {
         </div>
       </div>
       <Sidebar layers={layers} onLayerToggle={handleLayersUpdate} />
-      
+      {map && <ScaleBarControl map={map} />}
     </div>
   );
 }
