@@ -45,6 +45,7 @@ const AddAgroActivityComponent = ({ show, handleClose, map, isDrawingPoint, onPo
     } else {
       if (drawRef.current) {
         map.removeInteraction(drawRef.current);
+        sourceRef.current.clear(); // Borrar el punto dibujado
       }
     }
 

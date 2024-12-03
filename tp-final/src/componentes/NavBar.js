@@ -39,7 +39,10 @@ const Navbar = ({ map, isDrawing, onDrawButtonClick, onClearLengthMeasurements, 
   };
 
   const handleAddAgroActivityClick = () => {
-    setIsDrawingPoint(true);
+    setIsDrawingPoint(!isDrawingPoint);
+    if (isDrawingPoint) {
+      setShowAddAgroActivity(false);
+    }
   };
 
   const handlePointDrawn = (coordinates) => {
@@ -54,7 +57,7 @@ const Navbar = ({ map, isDrawing, onDrawButtonClick, onClearLengthMeasurements, 
   return (
     <div className="navbar-section">
       <div className="navbar-box">
-        <Button color="secondary" onClick={handleAddAgroActivityClick}>
+        <Button color={isDrawingPoint ? 'warning' : 'secondary'} onClick={handleAddAgroActivityClick}>
           Agregar Actividad Agropecuaria
         </Button>
         <Button 
