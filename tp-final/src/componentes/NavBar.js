@@ -5,10 +5,14 @@ import LengthMeasurement from './LengthMeasurement';
 import AreaMeasurement from './AreaMeasurement';
 import './NavBar.css';
 
-const Navbar = ({ map, isDrawing, onDrawButtonClick, onClearDrawings, onAddAgroActivityClick, drawType, setDrawType }) => {
+const Navbar = ({ map, isDrawing, onDrawButtonClick, onClearLengthMeasurements, onClearAreaMeasurements, onAddAgroActivityClick, drawType, setDrawType }) => {
   const handleDrawButtonClick = (type) => {
     if (isDrawing && drawType === type) {
-      onClearDrawings();
+      if (type === 'length') {
+        onClearLengthMeasurements();
+      } else if (type === 'area') {
+        onClearAreaMeasurements();
+      }
       setDrawType(null);
     } else {
       setDrawType(type);

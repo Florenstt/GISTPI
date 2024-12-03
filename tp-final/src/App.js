@@ -12,8 +12,7 @@ function App() {
   const [map, setMap] = useState(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [drawType, setDrawType] = useState(null);
-  const [showAddAgroActivity, setShowAddAgroActivity] = useState(false); // Estado para controlar el modal
-
+  
   const handleLayersUpdate = (newLayers) => {
     setLayers(newLayers);
   };
@@ -26,9 +25,9 @@ function App() {
     setIsDrawing(!isDrawing);
   };
 
-  const handleClearDrawings = () => {
+  const handleClearLengthMeasurements = () => {
     if (map) {
-      const layersToRemove = map.getLayers().getArray().filter(layer => layer.get('name') === 'drawLayer');
+      const layersToRemove = map.getLayers().getArray().filter(layer => layer.get('name') === 'lengthLayer');
       layersToRemove.forEach(layer => map.removeLayer(layer));
       // Remove tooltips
       const tooltips = document.querySelectorAll('.ol-tooltip');
@@ -36,13 +35,17 @@ function App() {
     }
   };
 
-  const handleAddAgroActivityClick = () => {
-    setShowAddAgroActivity(true);
+  const handleClearAreaMeasurements = () => {
+    if (map) {
+      const layersToRemove = map.getLayers().getArray().filter(layer => layer.get('name') === 'areaLayer');
+      layersToRemove.forEach(layer => map.removeLayer(layer));
+      // Remove tooltips
+      const tooltips = document.querySelectorAll('.ol-tooltip');
+      tooltips.forEach(tooltip => tooltip.remove());
+    }
   };
 
-  const handleCloseAddAgroActivity = () => {
-    setShowAddAgroActivity(false);
-  };
+  
 
   return (
     <div className="App">
@@ -50,8 +53,8 @@ function App() {
         map={map} 
         isDrawing={isDrawing} 
         onDrawButtonClick={handleDrawButtonClick} 
-        onClearDrawings={handleClearDrawings} 
-        onAddAgroActivityClick={handleAddAgroActivityClick} 
+        onClearLengthMeasurements={handleClearLengthMeasurements} 
+        onClearAreaMeasurements={handleClearAreaMeasurements} 
         drawType={drawType}
         setDrawType={setDrawType}
       />

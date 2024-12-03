@@ -37,7 +37,7 @@ const LengthMeasurement = ({ map, isDrawing }) => {
           }),
         }),
       }),
-      name: 'drawLayer',
+      name: 'lengthLayer',
     });
 
     map.addLayer(vector);

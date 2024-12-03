@@ -37,7 +37,7 @@ const AreaMeasurement = ({ map, isDrawing }) => {
           }),
         }),
       }),
-      name: 'drawLayer',
+      name: 'areaLayer',
     });
 
     map.addLayer(vector);
