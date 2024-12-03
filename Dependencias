@@ -5,3 +5,13 @@ estilos de react: npm install react-bootstrap bootstrap
 inicia el servidor de react: npm start
 
 inicia el servidor de docker: docker-compose up
+
+servidor de node: npm install pg
+
+dependencias de cors: npm install cors
+
+correr el servidor: node servers.js
+
+instalar axios: npm install axios
+
+instalar proj4: npm install proj4
