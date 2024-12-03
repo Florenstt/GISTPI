@@ -3,6 +3,10 @@ import React from 'react';
 import './Legend.css';
 
 const Legend = ({ layers }) => {
+  if (!Array.isArray(layers)) {
+    return null;
+  }
+
   const activeLayer = layers.find(layer => layer.get('active'));
   const visibleLayers = layers.filter(layer => layer.getVisible());
 

@@ -7,6 +7,10 @@ const Sidebar = ({ layers, onLayerToggle }) => {
 
   const toggleDropdown = () => setDropdownOpen(prevState => !prevState);
 
+  if (!Array.isArray(layers)) {
+    return null;
+  }
+
   return (
     <div className="sidebar">
       <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>

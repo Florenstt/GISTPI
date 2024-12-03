@@ -13,6 +13,7 @@ function App() {
   const [map, setMap] = useState(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [drawType, setDrawType] = useState(null);
+  const [showAddAgroActivity, setShowAddAgroActivity] = useState(false);
 
   const handleLayersUpdate = (newLayers) => {
     setLayers(newLayers);
@@ -46,6 +47,18 @@ function App() {
     }
   };
 
+  const handleLayerToggle = (layer) => {
+    layer.setVisible(!layer.getVisible());
+    setLayers([...layers]);
+  };
+
+  const handleAddAgroActivityClick = () => {
+    setShowAddAgroActivity(true);
+  };
+
+  const handleCloseAddAgroActivity = () => {
+    setShowAddAgroActivity(false);
+  };
 
   return (
     <div className="App">
@@ -55,6 +68,7 @@ function App() {
         onDrawButtonClick={handleDrawButtonClick} 
         onClearLengthMeasurements={handleClearLengthMeasurements}
         onClearAreaMeasurements={handleClearAreaMeasurements}
+        onAddAgroActivityClick={handleAddAgroActivityClick} 
         drawType={drawType}
         setDrawType={setDrawType}
       />
@@ -68,7 +82,7 @@ function App() {
           </div>
         </div>
       </div>
-      <Sidebar layers={layers} onLayerToggle={handleLayersUpdate} />
+      <Sidebar layers={layers} onLayerToggle={handleLayerToggle} />
       {map && <ScaleBarControl map={map} />}
     </div>
   );
