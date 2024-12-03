@@ -8,7 +8,7 @@ import VectorSource from 'ol/source/Vector';
 import { Style, Circle as CircleStyle, Fill, Stroke } from 'ol/style';
 import 'ol/ol.css';
 
-const AddAgroActivityComponent = ({ show, handleClose, map }) => {
+const AddAgroActivityComponent = ({ show, handleClose, map, isDrawingPoint, onPointDrawn }) => {
   const [name, setName] = useState('');
   const [coordinates, setCoordinates] = useState(null);
   const drawRef = useRef(null);
@@ -29,7 +29,7 @@ const AddAgroActivityComponent = ({ show, handleClose, map }) => {
 
     map.addLayer(layerRef.current);
 
-    if (show) {
+    if (isDrawingPoint) {
       drawRef.current = new Draw({
         source: sourceRef.current,
         type: 'Point',
@@ -38,6 +38,7 @@ const AddAgroActivityComponent = ({ show, handleClose, map }) => {
       drawRef.current.on('drawend', (event) => {
         const coords = event.feature.getGeometry().getCoordinates();
         setCoordinates(coords);
+        onPointDrawn(coords);
       });
 
       map.addInteraction(drawRef.current);
@@ -53,7 +54,7 @@ const AddAgroActivityComponent = ({ show, handleClose, map }) => {
       }
       map.removeLayer(layerRef.current);
     };
-  }, [map, show]);
+  }, [map, isDrawingPoint]);
 
   const handleSave = () => {
     if (name && coordinates) {

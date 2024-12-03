@@ -6,6 +6,7 @@ import './NavBar.css';
 
 const Navbar = ({ map, isDrawing, onDrawButtonClick, onClearLengthMeasurements, onClearAreaMeasurements, drawType, setDrawType }) => {
   const [showAddAgroActivity, setShowAddAgroActivity] = useState(false); // Estado para controlar la visibilidad del modal
+  const [isDrawingPoint, setIsDrawingPoint] = useState(false); // Estado para controlar si se está dibujando un punto
 
   const handleDrawButtonClick = (type) => {
     if (isDrawing && drawType === type) {
@@ -38,6 +39,11 @@ const Navbar = ({ map, isDrawing, onDrawButtonClick, onClearLengthMeasurements, 
   };
 
   const handleAddAgroActivityClick = () => {
+    setIsDrawingPoint(true);
+  };
+
+  const handlePointDrawn = (coordinates) => {
+    setIsDrawingPoint(false);
     setShowAddAgroActivity(true);
   };
 
@@ -76,6 +82,8 @@ const Navbar = ({ map, isDrawing, onDrawButtonClick, onClearLengthMeasurements, 
         show={showAddAgroActivity}
         handleClose={handleCloseAddAgroActivity}
         map={map}
+        isDrawingPoint={isDrawingPoint}
+        onPointDrawn={handlePointDrawn}
       />
     </div>
   );
