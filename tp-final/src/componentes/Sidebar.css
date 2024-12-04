@@ -13,10 +13,14 @@
 }
 
 .sidebar .dropdown-menu-scrollable {
-  max-height: 200px;
+  max-height: 300px;
   overflow-y: auto;
 }
 
 .layer-visible {
   background-color: #d3d3d3 !important; /* Color gris para las capas visibles */
+}
+
+.dropdown-search {
+  padding: 10px;
 }

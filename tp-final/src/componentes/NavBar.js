@@ -1,4 +1,4 @@
-// Navbar.js
+// NavBar.js
 import React, { useState } from 'react';
 import { Button } from 'reactstrap';
 import AddAgroActivityComponent from './AddAgroActivityComponent'; // Importa el componente
@@ -7,6 +7,7 @@ import './NavBar.css';
 const Navbar = ({ map, isDrawing, onDrawButtonClick, onClearLengthMeasurements, onClearAreaMeasurements, drawType, setDrawType }) => {
   const [showAddAgroActivity, setShowAddAgroActivity] = useState(false); // Estado para controlar la visibilidad del modal
   const [isDrawingPoint, setIsDrawingPoint] = useState(false); // Estado para controlar si se está dibujando un punto
+  const [coordinates, setCoordinates] = useState(null);
 
   const handleDrawButtonClick = (type) => {
     if (isDrawing && drawType === type) {
@@ -39,27 +40,23 @@ const Navbar = ({ map, isDrawing, onDrawButtonClick, onClearLengthMeasurements, 
   };
 
   const handleAddAgroActivityClick = () => {
-    setIsDrawingPoint(!isDrawingPoint);
-    if (isDrawingPoint) {
-      setShowAddAgroActivity(false);
-    }
+    setIsDrawingPoint(true);
   };
 
-  const handlePointDrawn = (coordinates) => {
+  const handlePointDrawn = (coords) => {
+    setCoordinates(coords);
     setIsDrawingPoint(false);
     setShowAddAgroActivity(true);
   };
 
   const handleCloseAddAgroActivity = () => {
     setShowAddAgroActivity(false);
+    setCoordinates(null);
   };
 
   return (
     <div className="navbar-section">
       <div className="navbar-box">
-        <Button color={isDrawingPoint ? 'warning' : 'secondary'} onClick={handleAddAgroActivityClick}>
-          Agregar Actividad Agropecuaria
-        </Button>
         <Button 
           color={isDrawing && drawType === 'length' ? 'warning' : 'secondary'}
           onClick={() => handleDrawButtonClick('length')}
@@ -71,6 +68,12 @@ const Navbar = ({ map, isDrawing, onDrawButtonClick, onClearLengthMeasurements, 
           onClick={() => handleDrawButtonClick('area')}
         >
           <i className="fa-solid fa-ruler"></i> Area
+        </Button>
+        <Button 
+          color={isDrawingPoint ? 'warning' : 'secondary'} 
+          onClick={handleAddAgroActivityClick}
+        >
+          Agregar Actividad Agropecuaria
         </Button>
         <div className="zoom-buttons">
           <Button color="secondary" onClick={handleZoomIn}>
@@ -85,8 +88,8 @@ const Navbar = ({ map, isDrawing, onDrawButtonClick, onClearLengthMeasurements, 
         show={showAddAgroActivity}
         handleClose={handleCloseAddAgroActivity}
         map={map}
-        isDrawingPoint={isDrawingPoint}
         onPointDrawn={handlePointDrawn}
+        isDrawingPoint={isDrawingPoint}
       />
     </div>
   );

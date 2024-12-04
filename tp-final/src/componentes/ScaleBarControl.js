@@ -131,7 +131,7 @@ const ScaleBarControl = ({ map }) => {
             </label>
             <label>
               Type:
-              <select id="type" ref={typeSelectRef} value={scaleType}>
+              <select id="type" ref={typeSelectRef} value={scaleType} onChange={(e) => setScaleType(e.target.value)}>
                 <option value="scaleline">Scale Line</option>
                 <option value="scalebar">Scale Bar</option>
               </select>

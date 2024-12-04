@@ -1,14 +1,14 @@
 // AddAgroActivityComponent.js
-import React, { useState, useRef, useEffect } from 'react';
-import { Modal, Button, Form } from 'react-bootstrap';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import { Draw } from 'ol/interaction';
-import VectorLayer from 'ol/layer/Vector';
-import VectorSource from 'ol/source/Vector';
-import { Style, Circle as CircleStyle, Fill, Stroke } from 'ol/style';
-import 'ol/ol.css';
+import { Modal, Button, Form } from 'react-bootstrap';
+import Draw from 'ol/interaction/Draw.js';
+import { Vector as VectorSource } from 'ol/source.js';
+import { Vector as VectorLayer } from 'ol/layer.js';
+import { Circle as CircleStyle, Fill, Stroke, Style } from 'ol/style.js';
+import proj4 from 'proj4';
 
-const AddAgroActivityComponent = ({ show, handleClose, map, isDrawingPoint, onPointDrawn }) => {
+const AddAgroActivityComponent = ({ show, handleClose, map, onPointDrawn, isDrawingPoint }) => {
   const [name, setName] = useState('');
   const [coordinates, setCoordinates] = useState(null);
   const drawRef = useRef(null);
@@ -42,11 +42,6 @@ const AddAgroActivityComponent = ({ show, handleClose, map, isDrawingPoint, onPo
       });
 
       map.addInteraction(drawRef.current);
-    } else {
-      if (drawRef.current) {
-        map.removeInteraction(drawRef.current);
-        sourceRef.current.clear(); // Borrar el punto dibujado
-      }
     }
 
     return () => {
@@ -55,14 +50,17 @@ const AddAgroActivityComponent = ({ show, handleClose, map, isDrawingPoint, onPo
       }
       map.removeLayer(layerRef.current);
     };
-  }, [map, isDrawingPoint]);
+  }, [map, isDrawingPoint, onPointDrawn]);
 
   const handleSave = () => {
     if (name && coordinates) {
+      // Convertir coordenadas UTM a WGS 84
+      const [longitude, latitude] = proj4('EPSG:32633', 'EPSG:4326', coordinates); // Cambia 'EPSG:32633' por el código EPSG correcto para tus coordenadas UTM
+
       // Guardar en la base de datos
       axios.post('http://localhost:3001/api/actividades_agropecuarias', {
         name: name,
-        coordinates: coordinates,
+        coordinates: [longitude, latitude],
       })
       .then(response => {
         alert('Registro guardado exitosamente');
@@ -70,7 +68,6 @@ const AddAgroActivityComponent = ({ show, handleClose, map, isDrawingPoint, onPo
       })
       .catch(error => {
         console.error('Error guardando el registro:', error);
-        alert(`Error guardando el registro: ${error.response.data.error}`);
       });
     }
   };

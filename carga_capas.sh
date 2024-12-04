@@ -1,6 +1,6 @@
 #!/bin/bash
 # cambien el SHP_DIR por la direccion donde estan sus capas
-SHP_DIR="C:/Users/flgo_/Documentos/1-QGIS/TPI/sig_ign/SIG_IGN2011"
+SHP_DIR="/Users/agustinezequielbrites/Desktop/sig_ign/SIG_IGN2011"
 DB_HOST="localhost"
 DB_PORT="5433"
 DB_NAME="sigdb"
