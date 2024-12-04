@@ -9,6 +9,7 @@ import ScaleBarControl from './componentes/ScaleBarControl';
 import LengthMeasurement from './componentes/LengthMeasurement';
 import AreaMeasurement from './componentes/AreaMeasurement';
 import { createLayers } from './componentes/LayersComponent';
+import SearchAgroActivities from './componentes/SearchAgroActivities';
 
 function App() {
   const [layers, setLayers] = useState(createLayers());
@@ -16,6 +17,7 @@ function App() {
   const [isDrawing, setIsDrawing] = useState(false);
   const [drawType, setDrawType] = useState(null);
   const [showAddAgroActivity, setShowAddAgroActivity] = useState(false);
+  const [isSearching, setIsSearching] = useState(false);
 
   const handleLayersUpdate = (newLayers) => {
     setLayers(newLayers);
@@ -62,6 +64,14 @@ function App() {
     setShowAddAgroActivity(false);
   };
 
+  const handleSearchAgroActivitiesClick = () => {
+    setIsSearching(true);
+  };
+
+  const handleSearchComplete = () => {
+    setIsSearching(false);
+  };
+
   return (
     <div className="App">
       <Navbar 
@@ -70,9 +80,9 @@ function App() {
         onDrawButtonClick={handleDrawButtonClick} 
         onClearLengthMeasurements={handleClearLengthMeasurements}
         onClearAreaMeasurements={handleClearAreaMeasurements}
-        onAddAgroActivityClick={handleAddAgroActivityClick} 
         drawType={drawType}
         setDrawType={setDrawType}
+        onSearchAgroActivitiesClick={handleSearchAgroActivitiesClick}
       />
       <div className="container-fluid main-content">
         <div className="row content-row">
@@ -88,6 +98,7 @@ function App() {
       {map && isDrawing && drawType === 'length' && <LengthMeasurement map={map} isDrawing={isDrawing} />}
       {map && isDrawing && drawType === 'area' && <AreaMeasurement map={map} isDrawing={isDrawing} />}
       {map && <ScaleBarControl map={map} />}
+      {map && isSearching && <SearchAgroActivities map={map} onSearchComplete={handleSearchComplete} />}
     </div>
   );
 }
