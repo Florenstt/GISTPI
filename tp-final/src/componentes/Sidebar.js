@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Input } from 'reactstrap';
 import './Sidebar.css';
-import 'bootstrap-icons/font/bootstrap-icons.css';
 
 const Sidebar = ({ layers, onLayerToggle }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -13,9 +12,9 @@ const Sidebar = ({ layers, onLayerToggle }) => {
     setSearchTerm(event.target.value);
   };
 
-  const filteredLayers = layers.filter(layer => 
-    layer.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredLayers = layers
+    .filter(layer => layer.get('title').toLowerCase().includes(searchTerm.toLowerCase()))
+    .sort((a, b) => b.getVisible() - a.getVisible()); // Ordenar capas visibles primero
 
   if (!Array.isArray(layers)) {
     return null;
@@ -28,20 +27,20 @@ const Sidebar = ({ layers, onLayerToggle }) => {
           <i className="bi bi-stack"></i> Capas
         </DropdownToggle>
         <DropdownMenu className="dropdown-menu-scrollable">
-          <div className="dropdown-search">
-            <Input
-              type="text"
-              placeholder="Buscar capas..."
-              value={searchTerm}
-              onChange={handleSearchChange}
-            />
-          </div>
+          <Input
+            type="text"
+            placeholder="Buscar capas..."
+            value={searchTerm}
+            onChange={handleSearchChange}
+            className="search-input"
+          />
           {filteredLayers.map((layer, index) => (
             <DropdownItem 
               key={index} 
-              onClick={() => onLayerToggle(layer)}
+              onClick={() => onLayerToggle(layer)} 
+              className={layer.getVisible() ? 'layer-visible' : ''}
             >
-              {layer.name}
+              {layer.get('title')}
             </DropdownItem>
           ))}
         </DropdownMenu>
