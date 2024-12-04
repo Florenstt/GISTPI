@@ -57,9 +57,9 @@ const Navbar = ({ map, isDrawing, onDrawButtonClick, onClearLengthMeasurements, 
   return (
     <div className="navbar-section">
       <div className="navbar-box">
-        <Button color={isDrawingPoint ? 'warning' : 'secondary'} onClick={handleAddAgroActivityClick}>
+        {/* <Button color={isDrawingPoint ? 'warning' : 'secondary'} onClick={handleAddAgroActivityClick}>
           Agregar Actividad Agropecuaria
-        </Button>
+        </Button> */}
         <Button 
           color={isDrawing && drawType === 'length' ? 'warning' : 'secondary'}
           onClick={() => handleDrawButtonClick('length')}

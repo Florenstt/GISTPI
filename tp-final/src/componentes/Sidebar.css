@@ -5,6 +5,7 @@
   right: 10px;
   border-radius: 5px;
   z-index: 1000; /* Asegúrate de que el sidebar esté por encima del mapa */
+  padding: 10px;
 }
 
 .sidebar h3 {
@@ -17,6 +18,18 @@
   overflow-y: auto;
 }
 
+.search-input {
+  margin: 10px;
+  padding: 5px;
+  width: calc(100% - 20px);
+  box-sizing: border-box;
+}
+
+.dropdown-menu-scrollable {
+  max-height: 500px; /* Aumenta la altura máxima */
+  overflow-y: auto;
+}
+
 .layer-visible {
-  background-color: #d3d3d3 !important; /* Color gris para las capas visibles */
+  font-weight: bold;
 }
