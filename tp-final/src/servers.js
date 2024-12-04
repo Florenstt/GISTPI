@@ -35,8 +35,8 @@ app.post('/api/actividades_agropecuarias', async (req, res) => {
     );
     res.status(201).json(result.rows[0]);
   } catch (error) {
-    console.error('Error guardando el nombre y las coordenadas:', error);
-    res.status(500).json({ error: 'Error guardando el nombre y las coordenadas' });
+    console.error('Error guardando las coordenadas:', error);
+    res.status(500).json({ error: 'Error al guardar las coordenadas' });
   }
 });
 

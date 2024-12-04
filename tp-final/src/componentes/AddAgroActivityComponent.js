@@ -8,6 +8,10 @@ import { Vector as VectorLayer } from 'ol/layer.js';
 import { Circle as CircleStyle, Fill, Stroke, Style } from 'ol/style.js';
 import proj4 from 'proj4';
 
+// Define las proyecciones necesarias
+proj4.defs('EPSG:3857', '+proj=merc +lon_0=0 +k=1 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs');
+proj4.defs('EPSG:4326', '+proj=longlat +datum=WGS84 +no_defs');
+
 const AddAgroActivityComponent = ({ show, handleClose, map, onPointDrawn, isDrawingPoint }) => {
   const [name, setName] = useState('');
   const [coordinates, setCoordinates] = useState(null);
@@ -36,9 +40,17 @@ const AddAgroActivityComponent = ({ show, handleClose, map, onPointDrawn, isDraw
       });
 
       drawRef.current.on('drawend', (event) => {
+        // Coordenadas capturadas en EPSG:3857
         const coords = event.feature.getGeometry().getCoordinates();
-        setCoordinates(coords);
-        onPointDrawn(coords);
+        console.log('Coordenadas capturadas en EPSG:3857:', coords);
+
+        // Convertir a EPSG:4326
+        const [longitude, latitude] = proj4('EPSG:3857', 'EPSG:4326', coords);
+        console.log('Coordenadas convertidas a EPSG:4326:', { latitude, longitude });
+
+        // Actualizar estado o enviar a la API
+        setCoordinates([longitude, latitude]);
+        onPointDrawn([longitude, latitude]);
       });
 
       map.addInteraction(drawRef.current);
@@ -54,13 +66,10 @@ const AddAgroActivityComponent = ({ show, handleClose, map, onPointDrawn, isDraw
 
   const handleSave = () => {
     if (name && coordinates) {
-      // Convertir coordenadas UTM a WGS 84
-      const [longitude, latitude] = proj4('EPSG:32633', 'EPSG:4326', coordinates); // Cambia 'EPSG:32633' por el código EPSG correcto para tus coordenadas UTM
-
       // Guardar en la base de datos
       axios.post('http://localhost:3001/api/actividades_agropecuarias', {
         name: name,
-        coordinates: [longitude, latitude],
+        coordinates: coordinates,
       })
       .then(response => {
         alert('Registro guardado exitosamente');
