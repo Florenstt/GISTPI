@@ -4,7 +4,7 @@ import { Button } from 'reactstrap';
 import AddAgroActivityComponent from './AddAgroActivityComponent'; // Importa el componente
 import './NavBar.css';
 
-const Navbar = ({ map, isDrawing, onDrawButtonClick, onClearLengthMeasurements, onClearAreaMeasurements, drawType, setDrawType }) => {
+const Navbar = ({ map, isDrawing, onDrawButtonClick, onClearLengthMeasurements, onClearAreaMeasurements, drawType, setDrawType, onSearchAgroActivitiesClick }) => {
   const [showAddAgroActivity, setShowAddAgroActivity] = useState(false); // Estado para controlar la visibilidad del modal
   const [isDrawingPoint, setIsDrawingPoint] = useState(false); // Estado para controlar si se está dibujando un punto
   const [coordinates, setCoordinates] = useState(null);
@@ -74,6 +74,12 @@ const Navbar = ({ map, isDrawing, onDrawButtonClick, onClearLengthMeasurements, 
           onClick={handleAddAgroActivityClick}
         >
           Agregar Actividad Agropecuaria
+        </Button>
+        <Button 
+          color="secondary" 
+          onClick={onSearchAgroActivitiesClick}
+        >
+          Buscar Actividades Agropecuarias
         </Button>
         <div className="zoom-buttons">
           <Button color="secondary" onClick={handleZoomIn}>
