@@ -23,705 +23,95 @@ export const createLayers = () => {
     }),
   });
 
-  const ejidoLayer = new TileLayer({
-    title: "Ejido",
-    visible: false,
-    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:ejido',
-    source: new TileWMS({
-      url: 'http://localhost:8080/geoserver/TPI/wms',
-      params: {
-        LAYERS: 'TPI:ejido',
-        TILED: true
-      },
-      serverType: 'geoserver'
-    })
-  });
+  const createVectorLayer = (title, typeName, color) => {
+    return new VectorLayer({
+      title,
+      visible: false, // Las capas están ocultas por defecto
+      source: new VectorSource({
+        url: `http://localhost:8080/geoserver/TPI/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=TPI:${typeName}&outputFormat=application/json`,
+        format: new GeoJSON(),
+      }),
+      style: new Style({
+        image: new CircleStyle({
+          radius: 5,
+          fill: new Fill({ color }),
+          stroke: new Stroke({ color: 'black', width: 1 }),
+        }),
+      }),
+      styleUrl: `http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:${typeName}`,
+    });
+  };
 
-  const espejoDeAguaLayer = new TileLayer({
-    title: "Espejo de Agua",
-    visible: false,
-    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:espejo_de_agua_hid',
-    source: new TileWMS({
-      url: 'http://localhost:8080/geoserver/TPI/wms',
-      params: {
-        LAYERS: 'TPI:espejo_de_agua_hid',
-        TILED: true
-      },
-      serverType: 'geoserver'
-    })
-  });
+  const createTileLayer = (title, typeName) => {
+    return new TileLayer({
+      title,
+      visible: false, // Las capas están ocultas por defecto
+      styleUrl: `http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:${typeName}`,
+      source: new TileWMS({
+        url: 'http://localhost:8080/geoserver/TPI/wms',
+        params: {
+          LAYERS: `TPI:${typeName}`,
+          TILED: true
+        },
+        serverType: 'geoserver'
+      })
+    });
+  };
 
-  const islaLayer = new TileLayer({
-    title: "Isla",
-    visible: false,
-    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:isla',
-    source: new TileWMS({
-      url: 'http://localhost:8080/geoserver/TPI/wms',
-      params: {
-        LAYERS: 'TPI:isla',
-        TILED: true
-      },
-      serverType: 'geoserver'
-    })
-  });
-
-  const paisLayer = new TileLayer({
-    title: "País",
-    visible: false,
-    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:pais_lim',
-    source: new TileWMS({
-      url: 'http://localhost:8080/geoserver/TPI/wms',
-      params: {
-        LAYERS: 'TPI:pais_lim',
-        TILED: true
-      },
-      serverType: 'geoserver'
-    })
-  });
-
-  const sueCongeladoLayer = new TileLayer({
-    title: "Sue Congelado",
-    visible: false,
-    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:sue_congelado',
-    source: new TileWMS({
-      url: 'http://localhost:8080/geoserver/TPI/wms',
-      params: {
-        LAYERS: 'TPI:sue_congelado',
-        TILED: true
-      },
-      serverType: 'geoserver'
-    })
-  });
-
-  const sueConsolidadoLayer = new TileLayer({
-    title: "Sue Consolidado",
-    visible: false,
-    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:sue_consolidado',
-    source: new TileWMS({
-      url: 'http://localhost:8080/geoserver/TPI/wms',
-      params: {
-        LAYERS: 'TPI:sue_consolidado',
-        TILED: true
-      },
-      serverType: 'geoserver'
-    })
-  });
-
-  const sueCosteroLayer = new TileLayer({
-    title: "Sue Costero",
-    visible: false,
-    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:sue_costero',
-    source: new TileWMS({
-      url: 'http://localhost:8080/geoserver/TPI/wms',
-      params: {
-        LAYERS: 'TPI:sue_costero',
-        TILED: true
-      },
-      serverType: 'geoserver'
-    })
-  });
-
-  const sueHidromorfologicoLayer = new TileLayer({
-    title: "Sue Hidromorfológico",
-    visible: false,
-    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:sue_hidromorfologico',
-    source: new TileWMS({
-      url: 'http://localhost:8080/geoserver/TPI/wms',
-      params: {
-        LAYERS: 'TPI:sue_hidromorfologico',
-        TILED: true
-      },
-      serverType: 'geoserver'
-    })
-  });
-
-  const sueNoConsolidadoLayer = new TileLayer({
-    title: "Sue No Consolidado",
-    visible: false,
-    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:sue_no_consolidado',
-    source: new TileWMS({
-      url: 'http://localhost:8080/geoserver/TPI/wms',
-      params: {
-        LAYERS: 'TPI:sue_no_consolidado',
-        TILED: true
-      },
-      serverType: 'geoserver'
-    })
-  });
-
-  const vegArboreaLayer = new TileLayer({
-    title: "Vegetación Arbórea",
-    visible: false,
-    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:veg_arborea',
-    source: new TileWMS({
-      url: 'http://localhost:8080/geoserver/TPI/wms',
-      params: {
-        LAYERS: 'TPI:veg_arborea',
-        TILED: true
-      },
-      serverType: 'geoserver'
-    })
-  });
-
-  const vegArbustivaLayer = new TileLayer({
-    title: "Vegetación Arbustiva",
-    visible: false,
-    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:veg_arbustiva',
-    source: new TileWMS({
-      url: 'http://localhost:8080/geoserver/TPI/wms',
-      params: {
-        LAYERS: 'TPI:veg_arbustiva',
-        TILED: true
-      },
-      serverType: 'geoserver'
-    })
-  });
-
-  const vegCultivosLayer = new TileLayer({
-    title: "Vegetación Cultivos",
-    visible: false,
-    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:veg_cultivos',
-    source: new TileWMS({
-      url: 'http://localhost:8080/geoserver/TPI/wms',
-      params: {
-        LAYERS: 'TPI:veg_cultivos',
-        TILED: true
-      },
-      serverType: 'geoserver'
-    })
-  });
-
-  const vegHidrofilaLayer = new TileLayer({
-    title: "Vegetación Hidrófila",
-    visible: false,
-    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:veg_hidrofila',
-    source: new TileWMS({
-      url: 'http://localhost:8080/geoserver/TPI/wms',
-      params: {
-        LAYERS: 'TPI:veg_hidrofila',
-        TILED: true
-      },
-      serverType: 'geoserver'
-    })
-  });
-
-  const vegSueloDesnudoLayer = new TileLayer({
-    title: "Vegetación Suelo Desnudo",
-    visible: false,
-    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:veg_suelo_desnudo',
-    source: new TileWMS({
-      url: 'http://localhost:8080/geoserver/TPI/wms',
-      params: {
-        LAYERS: 'TPI:veg_suelo_desnudo',
-        TILED: true
-      },
-      serverType: 'geoserver'
-    })
-  });
-
-
-  const actividadesAgropecuariasLayer = new VectorLayer({
-    title: 'Actividades Agropecuarias',
-    visible: true,
-    source: new VectorSource({
-      url: 'http://localhost:8080/geoserver/TPI/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=TPI:actividades_agropecuarias&outputFormat=application/json',
-      format: new GeoJSON(),
-    }),
-    style: redCircleStyle,
-    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:actividades_agropecuarias',
-  });
-
-  const actividadesEconomicasLayer = new TileLayer({
-    title: "Actividades Económicas",
-    visible: false,
-    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:actividades_economicas',
-    source: new TileWMS({
-      url: 'http://localhost:8080/geoserver/TPI/wms',
-      params: {
-        LAYERS: 'TPI:actividades_economicas',
-        TILED: true
-      },
-      serverType: 'geoserver'
-    })
-  });
-
-  const complejoDeEnergiaLayer = new TileLayer({
-    title: "Complejo de Energía",
-    visible: false,
-    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:complejo_de_energia',
-    source: new TileWMS({
-      url: 'http://localhost:8080/geoserver/TPI/wms',
-      params: {
-        LAYERS: 'TPI:complejo_de_energia',
-        TILED: true
-      },
-      serverType: 'geoserver'
-    })
-  });
-
-  const cursoDeAguaLayer = new TileLayer({
-    title: "Curso de Agua",
-    visible: false,
-    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:curso_de_agua',
-    source: new TileWMS({
-      url: 'http://localhost:8080/geoserver/TPI/wms',
-      params: {
-        LAYERS: 'TPI:curso_de_agua',
-        TILED: true
-      },
-      serverType: 'geoserver'
-    })
-  });
-
-  const curvasDeNivelLayer = new TileLayer({
-    title: "Curvas de Nivel",
-    visible: false,
-    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:curvas_de_nivel',
-    source: new TileWMS({
-      url: 'http://localhost:8080/geoserver/TPI/wms',
-      params: {
-        LAYERS: 'TPI:curvas_de_nivel',
-        TILED: true
-      },
-      serverType: 'geoserver'
-    })
-  });
-
-  const edifConstruccionesTuristicasLayer = new TileLayer({
-    title: "Edif Construcciones Turísticas",
-    visible: false,
-    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:edif_construcciones_turisticas',
-    source: new TileWMS({
-      url: 'http://localhost:8080/geoserver/TPI/wms',
-      params: {
-        LAYERS: 'TPI:edif_construcciones_turisticas',
-        TILED: true
-      },
-      serverType: 'geoserver'
-    })
-  });
-
-  const edifDeporYEsparcimientoLayer = new TileLayer({
-    title: "Edif Depor y Esparcimiento",
-    visible: false,
-    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:edif_depor_y_esparcimiento',
-    source: new TileWMS({
-      url: 'http://localhost:8080/geoserver/TPI/wms',
-      params: {
-        LAYERS: 'TPI:edif_depor_y_esparcimiento',
-        TILED: true
-      },
-      serverType: 'geoserver'
-    })
-  });
-
-  const edifEducacionLayer = new TileLayer({
-    title: "Edif Educación",
-    visible: false,
-    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:edif_educacion',
-    source: new TileWMS({
-      url: 'http://localhost:8080/geoserver/TPI/wms',
-      params: {
-        LAYERS: 'TPI:edif_educacion',
-        TILED: true
-      },
-      serverType: 'geoserver'
-    })
-  });
-
-  const edifReligiososLayer = new TileLayer({
-    title: "Edif Religiosos",
-    visible: false,
-    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:edif_religiosos',
-    source: new TileWMS({
-      url: 'http://localhost:8080/geoserver/TPI/wms',
-      params: {
-        LAYERS: 'TPI:edif_religiosos',
-        TILED: true
-      },
-      serverType: 'geoserver'
-    })
-  });
-
-  const edificioDeSeguridadLayer = new TileLayer({
-    title: "Edificio de Seguridad",
-    visible: false,
-    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:edificio_de_seguridad',
-    source: new TileWMS({
-      url: 'http://localhost:8080/geoserver/TPI/wms',
-      params: {
-        LAYERS: 'TPI:edificio_de_seguridad',
-        TILED: true
-      },
-      serverType: 'geoserver'
-    })
-  });
-
-  const edificioPublicoLayer = new TileLayer({
-    title: "Edificio Público",
-    visible: false,
-    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:edificio_publico',
-    source: new TileWMS({
-      url: 'http://localhost:8080/geoserver/TPI/wms',
-      params: {
-        LAYERS: 'TPI:edificio_publico',
-        TILED: true
-      },
-      serverType: 'geoserver'
-    })
-  });
-
-  const edificiosFerroviariosLayer = new TileLayer({
-    title: "Edificios Ferroviarios",
-    visible: false,
-    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:edificios_ferroviarios',
-    source: new TileWMS({
-      url: 'http://localhost:8080/geoserver/TPI/wms',
-      params: {
-        LAYERS: 'TPI:edificios_ferroviarios',
-        TILED: true
-      },
-      serverType: 'geoserver'
-    })
-  });
-
-  const edificioDeSaludLayer = new TileLayer({
-    title: "Edificio de Salud",
-    visible: false,
-    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:edificio_de_salud',
-    source: new TileWMS({
-      url: 'http://localhost:8080/geoserver/TPI/wms',
-      params: {
-        LAYERS: 'TPI:edificio_de_salud',
-        TILED: true
-      },
-      serverType: 'geoserver'
-    })
-  });
-
-  
-
-  
-
-  const estructurasPortuariasLayer = new TileLayer({
-    title: "Estructuras Portuarias",
-    visible: false,
-    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:estructuras_portuarias',
-    source: new TileWMS({
-      url: 'http://localhost:8080/geoserver/TPI/wms',
-      params: {
-        LAYERS: 'TPI:estructuras_portuarias',
-        TILED: true
-      },
-      serverType: 'geoserver'
-    })
-  });
-
-  const infraestAeroportuariaPuntoLayer = new TileLayer({
-    title: "Infraestructura Aeroportuaria Punto",
-    visible: false,
-    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:infraest_aeroportuaria_punto',
-    source: new TileWMS({
-      url: 'http://localhost:8080/geoserver/TPI/wms',
-      params: {
-        LAYERS: 'TPI:infraest_aeroportuaria_punto',
-        TILED: true
-      },
-      serverType: 'geoserver'
-    })
-  });
-
-  const infraestructuraHidroLayer = new TileLayer({
-    title: "Infraestructura Hidro",
-    visible: false,
-    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:infraestructura_hidro',
-    source: new TileWMS({
-      url: 'http://localhost:8080/geoserver/TPI/wms',
-      params: {
-        LAYERS: 'TPI:infraestructura_hidro',
-        TILED: true
-      },
-      serverType: 'geoserver'
-    })
-  });
-
-  
-  const limitePoliticoAdministrativoLayer = new TileLayer({
-    title: "Límite Político Administrativo",
-    visible: false,
-    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:limite_politico_administrativo',
-    source: new TileWMS({
-      url: 'http://localhost:8080/geoserver/TPI/wms',
-      params: {
-        LAYERS: 'TPI:limite_politico_administrativo',
-        TILED: true
-      },
-      serverType: 'geoserver'
-    })
-  });
-
-  const lineasDeConduccionEneLayer = new TileLayer({
-    title: "Líneas de Conducción de Energía",
-    visible: false,
-    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:lineas_de_conduccion_ene',
-    source: new TileWMS({
-      url: 'http://localhost:8080/geoserver/TPI/wms',
-      params: {
-        LAYERS: 'TPI:lineas_de_conduccion_ene',
-        TILED: true
-      },
-      serverType: 'geoserver'
-    })
-  });
-
-  const localidadLayer = new TileLayer({
-    title: "Localidad",
-    visible: false,
-    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:localidad',
-    source: new TileWMS({
-      url: 'http://localhost:8080/geoserver/TPI/wms',
-      params: {
-        LAYERS: 'TPI:localidad',
-        TILED: true
-      },
-      serverType: 'geoserver'
-    })
-  });
-  
-  const marcasYSeñalesLayer = new TileLayer({
-    title: "Marcas y Señales",
-    visible: false,
-    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:marcas_y_señales',
-    source: new TileWMS({
-      url: 'http://localhost:8080/geoserver/TPI/wms',
-      params: {
-        LAYERS: 'TPI:marcas_y_señales',
-        TILED: true
-      },
-      serverType: 'geoserver'
-    })
-  });
-
-  const muroEmbalseLayer = new TileLayer({
-    title: "Muro Embalse",
-    visible: false,
-    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:muro_embalse',
-    source: new TileWMS({
-      url: 'http://localhost:8080/geoserver/TPI/wms',
-      params: {
-        LAYERS: 'TPI:muro_embalse',
-        TILED: true
-      },
-      serverType: 'geoserver'
-    })
-  });
-
-  const obraPortuariaLayer = new TileLayer({
-    title: "Obra Portuaria",
-    visible: false,
-    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:obra_portuaria',
-    source: new TileWMS({
-      url: 'http://localhost:8080/geoserver/TPI/wms',
-      params: {
-        LAYERS: 'TPI:obra_portuaria',
-        TILED: true
-      },
-      serverType: 'geoserver'
-    })
-  });
-
-  const obrasDeComunicacionLayer = new TileLayer({
-    title: "Obras de Comunicación",
-    visible: false,
-    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:obras_de_comunicacion',
-    source: new TileWMS({
-      url: 'http://localhost:8080/geoserver/TPI/wms',
-      params: {
-        LAYERS: 'TPI:obras_de_comunicacion',
-        TILED: true
-      },
-      serverType: 'geoserver'
-    })
-  });
-
-  const otrasEdificacionesLayer = new TileLayer({
-    title: "Otras Edificaciones",
-    visible: false,
-    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:otras_edificaciones',
-    source: new TileWMS({
-      url: 'http://localhost:8080/geoserver/TPI/wms',
-      params: {
-        LAYERS: 'TPI:otras_edificaciones',
-        TILED: true
-      },
-      serverType: 'geoserver'
-    })
-  });
-
-  
-
-  const puenteRedVialPuntoLayer = new TileLayer({
-    title: "Puente Red Vial Punto",
-    visible: false,
-    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:puente_red_vial_punto',
-    source: new TileWMS({
-      url: 'http://localhost:8080/geoserver/TPI/wms',
-      params: {
-        LAYERS: 'TPI:puente_red_vial_punto',
-        TILED: true
-      },
-      serverType: 'geoserver'
-    })
-  });
-
-  const puntosDeAlturasTopograficasLayer = new TileLayer({
-    title: "Puntos de Alturas Topográficas",
-    visible: false,
-    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:puntos_de_alturas_topograficas',
-    source: new TileWMS({
-      url: 'http://localhost:8080/geoserver/TPI/wms',
-      params: {
-        LAYERS: 'TPI:puntos_de_alturas_topograficas',
-        TILED: true
-      },
-      serverType: 'geoserver'
-    })
-  });
-
-  const puntosDelTerrenoLayer = new TileLayer({
-    title: "Puntos del Terreno",
-    visible: false,
-    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:puntos_del_terreno',
-    source: new TileWMS({
-      url: 'http://localhost:8080/geoserver/TPI/wms',
-      params: {
-        LAYERS: 'TPI:puntos_del_terreno',
-        TILED: true
-      },
-      serverType: 'geoserver'
-    })
-  });
-
-  const redFerroviariaLayer = new TileLayer({
-    title: "Red Ferroviaria",
-    visible: false,
-    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:red_ferroviaria',
-    source: new TileWMS({
-      url: 'http://localhost:8080/geoserver/TPI/wms',
-      params: {
-        LAYERS: 'TPI:red_ferroviaria',
-        TILED: true
-      },
-      serverType: 'geoserver'
-    })
-  });
-
-  const redVialLayer = new TileLayer({
-    title: "Red Vial",
-    visible: false,
-    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:red_vial',
-    source: new TileWMS({
-      url: 'http://localhost:8080/geoserver/TPI/wms',
-      params: {
-        LAYERS: 'TPI:red_vial',
-        TILED: true
-      },
-      serverType: 'geoserver'
-    })
-  });
-
-  const salvadoDeObstaculoLayer = new TileLayer({
-    title: "Salvado de Obstáculo",
-    visible: false,
-    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:salvado_de_obstaculo',
-    source: new TileWMS({
-      url: 'http://localhost:8080/geoserver/TPI/wms',
-      params: {
-        LAYERS: 'TPI:salvado_de_obstaculo',
-        TILED: true
-      },
-      serverType: 'geoserver'
-    })
-  });
-
-  const señalizacionesLayer = new TileLayer({
-    title: "Señalizaciones",
-    visible: false,
-    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:señalizaciones',
-    source: new TileWMS({
-      url: 'http://localhost:8080/geoserver/TPI/wms',
-      params: {
-        LAYERS: 'TPI:señalizaciones',
-        TILED: true
-      },
-      serverType: 'geoserver'
-    })
-  });
-
-  
-
-  const viasSecundariasLayer = new TileLayer({
-    title: "Vías Secundarias",
-    visible: false,
-    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:vias_secundarias',
-    source: new TileWMS({
-      url: 'http://localhost:8080/geoserver/TPI/wms',
-      params: {
-        LAYERS: 'TPI:vias_secundarias',
-        TILED: true
-      },
-      serverType: 'geoserver'
-    })
-  });
-
-  return [
-    actividadesAgropecuariasLayer,
-    actividadesEconomicasLayer,
-    complejoDeEnergiaLayer,
-    cursoDeAguaLayer,
-    curvasDeNivelLayer,
-    edifConstruccionesTuristicasLayer,
-    edifDeporYEsparcimientoLayer,
-    edifEducacionLayer,
-    edifReligiososLayer,
-    edificioDeSeguridadLayer,
-    edificioPublicoLayer,
-    edificiosFerroviariosLayer,
-    edificioDeSaludLayer,
-    ejidoLayer,
-    estructurasPortuariasLayer,
-    infraestAeroportuariaPuntoLayer,
-    infraestructuraHidroLayer,
-    islaLayer,
-    limitePoliticoAdministrativoLayer,
-    lineasDeConduccionEneLayer,
-    localidadLayer,
-    espejoDeAguaLayer,
-    vegHidrofilaLayer,
-    marcasYSeñalesLayer,
-    muroEmbalseLayer,
-    obraPortuariaLayer,
-    obrasDeComunicacionLayer,
-    otrasEdificacionesLayer,
-    paisLayer,
-    puenteRedVialPuntoLayer,
-    puntosDeAlturasTopograficasLayer,
-    puntosDelTerrenoLayer,
-    redFerroviariaLayer,
-    redVialLayer,
-    salvadoDeObstaculoLayer,
-    señalizacionesLayer,
-    sueCongeladoLayer,
-    sueConsolidadoLayer,
-    sueCosteroLayer,
-    sueHidromorfologicoLayer,
-    sueNoConsolidadoLayer,
-    vegArboreaLayer,
-    vegArbustivaLayer,
-    vegCultivosLayer,
-    vegSueloDesnudoLayer,
-    viasSecundariasLayer
+  const pointLayers = [
+    createVectorLayer('Actividades Agropecuarias', 'actividades_agropecuarias', 'red'),
+    createVectorLayer('Actividades Económicas', 'actividades_economicas', 'blue'),
+    createVectorLayer('Complejo de Energía', 'complejo_de_energia', 'green'),
+    createVectorLayer('Edif Construcciones Turísticas', 'edif_construcciones_turisticas', 'yellow'),
+    createVectorLayer('Edif Depor y Esparcimiento', 'edif_depor_y_esparcimiento', 'purple'),
+    createVectorLayer('Edif Educación', 'edif_educacion', 'orange'),
+    createVectorLayer('Edif Religiosos', 'edif_religiosos', 'pink'),
+    createVectorLayer('Edificio de Seguridad', 'edificio_de_seguridad', 'brown'),
+    createVectorLayer('Edificio Público', 'edificio_publico', 'cyan'),
+    createVectorLayer('Edificios Ferroviarios', 'edificios_ferroviarios', 'magenta'),
+    createVectorLayer('Edificio de Salud', 'edificio_de_salud', 'lime'),
+    createVectorLayer('Estructuras Portuarias', 'estructuras_portuarias', 'navy'),
+    createVectorLayer('Infraest Aeroportuaria Punto', 'infraest_aeroportuaria_punto', 'teal'),
+    createVectorLayer('Infraestructura Hidro', 'infraestructura_hidro', 'olive'),
+    createVectorLayer('Localidad', 'localidad', 'maroon'),
+    createVectorLayer('Marcas y Señales', 'marcas_y_senales', 'silver'),
+    createVectorLayer('Obra Portuaria', 'obra_portuaria', 'gold'),
+    createVectorLayer('Otras Edificaciones', 'otras_edificaciones', 'coral'),
+    createVectorLayer('Puente Red Vial Punto', 'puente_red_vial_punto', 'orchid'),
+    createVectorLayer('Puntos de Alturas Topográficas', 'puntos_de_alturas_topograficas', 'plum'),
+    createVectorLayer('Puntos del Terreno', 'puntos_del_terreno', 'khaki'),
+    createVectorLayer('Salvado de Obstáculo', 'salvado_de_obstaculo', 'lavender'),
+    createVectorLayer('Señalizaciones', 'senalizaciones', 'ivory'),
   ];
+
+  const lineLayers = [
+    createVectorLayer('Curso de Agua', 'curso_de_agua', 'blue'),
+    createVectorLayer('Curvas de Nivel', 'curvas_de_nivel', 'brown'),
+    createVectorLayer('Límite Político Administrativo', 'limite_politico_administrativo', 'red'),
+    createVectorLayer('Líneas de Conducción de Energía', 'lineas_de_conduccion_ene', 'orange'),
+    createVectorLayer('Red Ferroviaria', 'red_ferroviaria', 'black'),
+    createVectorLayer('Red Vial', 'red_vial', 'yellow'),
+    createVectorLayer('Vías Secundarias', 'vias_secundarias', 'green'),
+  ];
+
+  const polygonLayers = [
+    createTileLayer('Ejido', 'ejido'),
+    createTileLayer('Espejos de Agua', 'espejos_de_agua'),
+    createTileLayer('Isla', 'isla'),
+    createTileLayer('País', 'pais_lim'),
+    createTileLayer('Sue Congelado', 'sue_congelado'),
+    createTileLayer('Sue Consolidado', 'sue_consolidado'),
+    createTileLayer('Sue Costero', 'sue_costero'),
+    createTileLayer('Sue Hidromorfologico', 'sue_hidromorfologico'),
+    createTileLayer('Sue No Consolidado', 'sue_no_consolidado'),
+    createTileLayer('Veg Arborea', 'veg_arborea'),
+    createTileLayer('Veg Arbustiva', 'veg_arbustiva'),
+    createTileLayer('Veg Cultivos', 'veg_cultivos'),
+    createTileLayer('Veg Hidrofila', 'veg_hidrofila'),
+    createTileLayer('Veg Suelo Desnudo', 'veg_suelo_desnudo'),
+  ];
+
+  return [...pointLayers, ...lineLayers, ...polygonLayers];
 };
 
 const LayersComponent = ({ setLayers }) => {
