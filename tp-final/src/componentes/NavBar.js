@@ -14,7 +14,7 @@ const NavBar = ({ map, isDrawing, onDrawButtonClick, onClearLengthMeasurements, 
   const [showSearchLayerByName, setShowSearchLayerByName] = useState(false); // Estado para controlar la visibilidad del nuevo componente
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const toggle = () => setDropdownOpen(prevState => !prevState);
+  const toggleDropdown = () => setDropdownOpen(prevState => !prevState);
 
   const handleDrawButtonClick = (type) => {
     if (isDrawing && drawType === type) {
@@ -71,7 +71,7 @@ const NavBar = ({ map, isDrawing, onDrawButtonClick, onClearLengthMeasurements, 
 
   return (
     <div className="navbar-dropdown">
-      <Dropdown isOpen={dropdownOpen} toggle={toggle}>
+      <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
         <DropdownToggle caret>
           Interacciones
         </DropdownToggle>
@@ -83,17 +83,17 @@ const NavBar = ({ map, isDrawing, onDrawButtonClick, onClearLengthMeasurements, 
             <FaSearchMinus /> Zoom Out
           </DropdownItem>
           <DropdownItem divider />
-          <DropdownItem onClick={() => handleDrawButtonClick('length')}>
+          <DropdownItem onClick={() => handleDrawButtonClick('length')} className={drawType === 'length' ? 'active-button' : ''}>
             <FaRuler /> Medir Longitud
           </DropdownItem>
-          <DropdownItem onClick={() => handleDrawButtonClick('area')}>
+          <DropdownItem onClick={() => handleDrawButtonClick('area')} className={drawType === 'area' ? 'active-button' : ''}>
             <FaRulerCombined /> Medir Area
           </DropdownItem>
           <DropdownItem divider />
-          <DropdownItem onClick={handleAddAgroActivityClick}>
+          <DropdownItem onClick={handleAddAgroActivityClick} className={isDrawingPoint ? 'active-button' : ''}>
             <FaPlus /> Añadir actividad Agro
           </DropdownItem>
-          <DropdownItem onClick={handleSearchAgroActivitiesClick}>
+          <DropdownItem onClick={handleSearchAgroActivitiesClick} className={showSearchLayerByName ? 'active-button' : ''}>
             <FaSearchLocation /> Buscar actividad
           </DropdownItem>
         </DropdownMenu>
