@@ -23,6 +23,7 @@ export const createLayers = () => {
       url: 'http://localhost:8080/geoserver/TPI/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=TPI%3Aactividades_agropecuarias&outputFormat=application%2Fjson',
       format: new GeoJSON()
     }),
+    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:actividades_agropecuarias',
     style: function (feature) {
       // Define estilos basados en atributos
       const actividad = feature.get('actividad'); // Cambia por el nombre del atributo

@@ -1,8 +1,8 @@
 /* Sidebar.css */
 .sidebar {
   position: fixed;
-  top: 50px;
-  right: 10px;
+  top: 0px;
+  right: 110px;
   border-radius: 5px;
   z-index: 1000; /* Asegúrate de que el sidebar esté por encima del mapa */
   padding: 10px;
