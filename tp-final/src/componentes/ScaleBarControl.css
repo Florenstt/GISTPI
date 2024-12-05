@@ -1,7 +1,8 @@
 /* ScaleBarControl.css */
 .scale-bar-container {
   position: absolute;
-  bottom: 100px;
+  bottom: 90px;
+  left: 10px;
   z-index: 1000; /* Asegúrate de que el control de escala esté por encima del mapa */
 }
 

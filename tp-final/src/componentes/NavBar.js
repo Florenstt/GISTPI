@@ -1,15 +1,19 @@
 // NavBar.js
 import React, { useState } from 'react';
-import { Button } from 'reactstrap';
+import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Button } from 'reactstrap';
 import AddAgroActivityComponent from './AddAgroActivityComponent'; // Importa el componente
 import SearchLayerByName from './SearchLayerByName'; // Importa el nuevo componente
 import './NavBar.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-const Navbar = ({ map, isDrawing, onDrawButtonClick, onClearLengthMeasurements, onClearAreaMeasurements, drawType, setDrawType, onSearchAgroActivitiesClick, layers }) => {
+const NavBar = ({ map, isDrawing, onDrawButtonClick, onClearLengthMeasurements, onClearAreaMeasurements, drawType, setDrawType, layers }) => {
   const [showAddAgroActivity, setShowAddAgroActivity] = useState(false); // Estado para controlar la visibilidad del modal
   const [isDrawingPoint, setIsDrawingPoint] = useState(false); // Estado para controlar si se está dibujando un punto
   const [coordinates, setCoordinates] = useState(null);
   const [showSearchLayerByName, setShowSearchLayerByName] = useState(false); // Estado para controlar la visibilidad del nuevo componente
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const toggle = () => setDropdownOpen(prevState => !prevState);
 
   const handleDrawButtonClick = (type) => {
     if (isDrawing && drawType === type) {
@@ -56,7 +60,7 @@ const Navbar = ({ map, isDrawing, onDrawButtonClick, onClearLengthMeasurements, 
     setCoordinates(null);
   };
 
-  const handleSearchLayerByNameClick = () => {
+  const handleSearchAgroActivitiesClick = () => {
     setShowSearchLayerByName(true);
   };
 
@@ -65,47 +69,35 @@ const Navbar = ({ map, isDrawing, onDrawButtonClick, onClearLengthMeasurements, 
   };
 
   return (
-    <div className="navbar-section">
-      <div className="navbar-box">
-        <Button 
-          color={isDrawing && drawType === 'length' ? 'warning' : 'secondary'}
-          onClick={() => handleDrawButtonClick('length')}
-        >
-          <i className="fa-solid fa-ruler"></i> Length
-        </Button>
-        <Button 
-          color={isDrawing && drawType === 'area' ? 'warning' : 'secondary'}
-          onClick={() => handleDrawButtonClick('area')}
-        >
-          <i className="fa-solid fa-ruler"></i> Area
-        </Button>
-        <Button 
-          color={isDrawingPoint ? 'warning' : 'secondary'} 
-          onClick={handleAddAgroActivityClick}
-        >
-          Agregar Actividad Agropecuaria
-        </Button>
-        <Button 
-          color="secondary" 
-          onClick={onSearchAgroActivitiesClick}
-        >
-          Buscar Actividades Agropecuarias
-        </Button>
-        <Button 
-          color="secondary" 
-          onClick={handleSearchLayerByNameClick}
-        >
-          Buscar Nombre de Algo
-        </Button>
-        <div className="zoom-buttons">
-          <Button color="secondary" onClick={handleZoomIn}>
-            <i className="bi bi-zoom-in"></i>
-          </Button>
-          <Button color="secondary" onClick={handleZoomOut}>
-            <i className="bi bi-zoom-out"></i>
-          </Button>
-        </div>
-      </div>
+    <div className="navbar-dropdown">
+      <Dropdown isOpen={dropdownOpen} toggle={toggle}>
+        <DropdownToggle caret>
+          Menu
+        </DropdownToggle>
+        <DropdownMenu>
+          <DropdownItem header>Map Controls</DropdownItem>
+          <DropdownItem onClick={handleZoomIn}>
+            Zoom In
+          </DropdownItem>
+          <DropdownItem onClick={handleZoomOut}>
+            Zoom Out
+          </DropdownItem>
+          <DropdownItem divider />
+          <DropdownItem onClick={() => handleDrawButtonClick('length')}>
+            Measure Length
+          </DropdownItem>
+          <DropdownItem onClick={() => handleDrawButtonClick('area')}>
+            Measure Area
+          </DropdownItem>
+          <DropdownItem divider />
+          <DropdownItem onClick={handleAddAgroActivityClick}>
+            Add Agro Activity
+          </DropdownItem>
+          <DropdownItem onClick={handleSearchAgroActivitiesClick}>
+            Search Agro Activities
+          </DropdownItem>
+        </DropdownMenu>
+      </Dropdown>
       <AddAgroActivityComponent
         show={showAddAgroActivity}
         handleClose={handleCloseAddAgroActivity}
@@ -123,4 +115,4 @@ const Navbar = ({ map, isDrawing, onDrawButtonClick, onClearLengthMeasurements, 
   );
 };
 
-export default Navbar;
+export default NavBar;
