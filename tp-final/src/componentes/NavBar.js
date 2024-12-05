@@ -1,10 +1,11 @@
 // NavBar.js
 import React, { useState } from 'react';
-import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Button } from 'reactstrap';
+import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import AddAgroActivityComponent from './AddAgroActivityComponent'; // Importa el componente
 import SearchLayerByName from './SearchLayerByName'; // Importa el nuevo componente
 import './NavBar.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { FaSearch, FaRuler, FaRulerCombined, FaPlus, FaSearchLocation, FaSearchPlus, FaSearchMinus } from 'react-icons/fa';
 
 const NavBar = ({ map, isDrawing, onDrawButtonClick, onClearLengthMeasurements, onClearAreaMeasurements, drawType, setDrawType, layers }) => {
   const [showAddAgroActivity, setShowAddAgroActivity] = useState(false); // Estado para controlar la visibilidad del modal
@@ -72,29 +73,28 @@ const NavBar = ({ map, isDrawing, onDrawButtonClick, onClearLengthMeasurements, 
     <div className="navbar-dropdown">
       <Dropdown isOpen={dropdownOpen} toggle={toggle}>
         <DropdownToggle caret>
-          Menu
+          Interacciones
         </DropdownToggle>
         <DropdownMenu>
-          <DropdownItem header>Map Controls</DropdownItem>
           <DropdownItem onClick={handleZoomIn}>
-            Zoom In
+            <FaSearchPlus /> Zoom In
           </DropdownItem>
           <DropdownItem onClick={handleZoomOut}>
-            Zoom Out
+            <FaSearchMinus /> Zoom Out
           </DropdownItem>
           <DropdownItem divider />
           <DropdownItem onClick={() => handleDrawButtonClick('length')}>
-            Measure Length
+            <FaRuler /> Medir Longitud
           </DropdownItem>
           <DropdownItem onClick={() => handleDrawButtonClick('area')}>
-            Measure Area
+            <FaRulerCombined /> Medir Area
           </DropdownItem>
           <DropdownItem divider />
           <DropdownItem onClick={handleAddAgroActivityClick}>
-            Add Agro Activity
+            <FaPlus /> Añadir actividad Agro
           </DropdownItem>
           <DropdownItem onClick={handleSearchAgroActivitiesClick}>
-            Search Agro Activities
+            <FaSearchLocation /> Buscar actividad
           </DropdownItem>
         </DropdownMenu>
       </Dropdown>

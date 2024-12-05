@@ -107,7 +107,7 @@ const SearchLayerByName = ({ show, handleClose, map, layers }) => {
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Buscar Nombre de Algo</Modal.Title>
+        <Modal.Title>Buscar Nombre de Actividad</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>
