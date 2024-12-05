@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Input } from 'reactstrap';
 import { FaMapMarkerAlt, FaDrawPolygon, FaRoad } from 'react-icons/fa';
 import './Sidebar.css';
@@ -6,12 +6,28 @@ import './Sidebar.css';
 const Sidebar = ({ layers, onLayerToggle }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [layerStyles, setLayerStyles] = useState({});
 
   const toggleDropdown = () => setDropdownOpen(prevState => !prevState);
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
   };
+
+  useEffect(() => {
+    const fetchLayerStyles = async () => {
+      const styles = {};
+      for (const layer of layers) {
+        const styleUrl = layer.get('styleUrl');
+        if (styleUrl) {
+          styles[layer.get('title')] = styleUrl;
+        }
+      }
+      setLayerStyles(styles);
+    };
+
+    fetchLayerStyles();
+  }, [layers]);
 
   const filteredLayers = layers
     .filter(layer => layer.get('title').toLowerCase().includes(searchTerm.toLowerCase()))
@@ -47,6 +63,9 @@ const Sidebar = ({ layers, onLayerToggle }) => {
                 onClick={() => onLayerToggle(layer)} 
                 className={layer.getVisible() ? 'layer-visible' : ''}
               >
+                {layerStyles[layer.get('title')] && (
+                  <img src={layerStyles[layer.get('title')]} alt="Layer Style" className="layer-style" />
+                )}
                 {layer.get('title')}
               </DropdownItem>
             ))}
@@ -59,6 +78,9 @@ const Sidebar = ({ layers, onLayerToggle }) => {
                 onClick={() => onLayerToggle(layer)} 
                 className={layer.getVisible() ? 'layer-visible' : ''}
               >
+                {layerStyles[layer.get('title')] && (
+                  <img src={layerStyles[layer.get('title')]} alt="Layer Style" className="layer-style" />
+                )}
                 {layer.get('title')}
               </DropdownItem>
             ))}
@@ -71,6 +93,9 @@ const Sidebar = ({ layers, onLayerToggle }) => {
                 onClick={() => onLayerToggle(layer)} 
                 className={layer.getVisible() ? 'layer-visible' : ''}
               >
+                {layerStyles[layer.get('title')] && (
+                  <img src={layerStyles[layer.get('title')]} alt="Layer Style" className="layer-style" />
+                )}
                 {layer.get('title')}
               </DropdownItem>
             ))}

@@ -49,10 +49,20 @@
 }
 
 .layer-category .dropdown-item {
+  display: flex;
+  align-items: center;
   padding: 5px 10px; /* Espacio interno para los elementos de la lista */
   cursor: pointer; /* Cambia el cursor al pasar sobre los elementos */
 }
 
 .layer-category .dropdown-item:hover {
   background-color: #e0e0e0; /* Fondo gris claro al pasar sobre los elementos */
+}
+
+.layer-style {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  border: 1px solid #000;
 }
