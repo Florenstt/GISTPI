@@ -23,10 +23,11 @@ export const createLayers = () => {
     }),
   });
 
-  const createVectorLayer = (title, typeName, color) => {
+  const createVectorLayer = (title, typeName, color, geometryType) => {
     return new VectorLayer({
       title,
       visible: false, // Las capas están ocultas por defecto
+      geometryType, // Añadimos el tipo de geometría
       source: new VectorSource({
         url: `http://localhost:8080/geoserver/TPI/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=TPI:${typeName}&outputFormat=application/json`,
         format: new GeoJSON(),
@@ -46,7 +47,6 @@ export const createLayers = () => {
     return new TileLayer({
       title,
       visible: false, // Las capas están ocultas por defecto
-      styleUrl: `http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:${typeName}`,
       source: new TileWMS({
         url: 'http://localhost:8080/geoserver/TPI/wms',
         params: {
@@ -59,56 +59,56 @@ export const createLayers = () => {
   };
 
   const pointLayers = [
-    createVectorLayer('Actividades Agropecuarias', 'actividades_agropecuarias', 'red'),
-    createVectorLayer('Actividades Económicas', 'actividades_economicas', 'blue'),
-    createVectorLayer('Complejo de Energía', 'complejo_de_energia', 'green'),
-    createVectorLayer('Edif Construcciones Turísticas', 'edif_construcciones_turisticas', 'yellow'),
-    createVectorLayer('Edif Depor y Esparcimiento', 'edif_depor_y_esparcimiento', 'purple'),
-    createVectorLayer('Edif Educación', 'edif_educacion', 'orange'),
-    createVectorLayer('Edif Religiosos', 'edif_religiosos', 'pink'),
-    createVectorLayer('Edificio de Seguridad', 'edificio_de_seguridad', 'brown'),
-    createVectorLayer('Edificio Público', 'edificio_publico', 'cyan'),
-    createVectorLayer('Edificios Ferroviarios', 'edificios_ferroviarios', 'magenta'),
-    createVectorLayer('Edificio de Salud', 'edificio_de_salud', 'lime'),
-    createVectorLayer('Estructuras Portuarias', 'estructuras_portuarias', 'navy'),
-    createVectorLayer('Infraest Aeroportuaria Punto', 'infraest_aeroportuaria_punto', 'teal'),
-    createVectorLayer('Infraestructura Hidro', 'infraestructura_hidro', 'olive'),
-    createVectorLayer('Localidad', 'localidad', 'maroon'),
-    createVectorLayer('Marcas y Señales', 'marcas_y_senales', 'silver'),
-    createVectorLayer('Obra Portuaria', 'obra_portuaria', 'gold'),
-    createVectorLayer('Otras Edificaciones', 'otras_edificaciones', 'coral'),
-    createVectorLayer('Puente Red Vial Punto', 'puente_red_vial_punto', 'orchid'),
-    createVectorLayer('Puntos de Alturas Topográficas', 'puntos_de_alturas_topograficas', 'plum'),
-    createVectorLayer('Puntos del Terreno', 'puntos_del_terreno', 'khaki'),
-    createVectorLayer('Salvado de Obstáculo', 'salvado_de_obstaculo', 'lavender'),
-    createVectorLayer('Señalizaciones', 'senalizaciones', 'ivory'),
+    createVectorLayer('Actividades Agropecuarias', 'actividades_agropecuarias', 'red', 'Point'),
+    createVectorLayer('Actividades Económicas', 'actividades_economicas', 'blue', 'Point'),
+    createVectorLayer('Complejo de Energía', 'complejo_de_energia', 'green', 'Point'),
+    createVectorLayer('Edif Construcciones Turísticas', 'edif_construcciones_turisticas', 'yellow', 'Point'),
+    createVectorLayer('Edif Depor y Esparcimiento', 'edif_depor_y_esparcimiento', 'purple', 'Point'),
+    createVectorLayer('Edif Educación', 'edif_educacion', 'orange', 'Point'),
+    createVectorLayer('Edif Religiosos', 'edif_religiosos', 'pink', 'Point'),
+    createVectorLayer('Edificio de Seguridad', 'edificio_de_seguridad', 'brown', 'Point'),
+    createVectorLayer('Edificio Público', 'edificio_publico', 'cyan', 'Point'),
+    createVectorLayer('Edificios Ferroviarios', 'edificios_ferroviarios', 'magenta', 'Point'),
+    createVectorLayer('Edificio de Salud', 'edificio_de_salud', 'lime', 'Point'),
+    createVectorLayer('Estructuras Portuarias', 'estructuras_portuarias', 'navy', 'Point'),
+    createVectorLayer('Infraest Aeroportuaria Punto', 'infraest_aeroportuaria_punto', 'teal', 'Point'),
+    createVectorLayer('Infraestructura Hidro', 'infraestructura_hidro', 'olive', 'Point'),
+    createVectorLayer('Localidad', 'localidad', 'maroon', 'Point'),
+    createVectorLayer('Marcas y Señales', 'marcas_y_senales', 'silver', 'Point'),
+    createVectorLayer('Obra Portuaria', 'obra_portuaria', 'gold', 'Point'),
+    createVectorLayer('Otras Edificaciones', 'otras_edificaciones', 'coral', 'Point'),
+    createVectorLayer('Puente Red Vial Punto', 'puente_red_vial_punto', 'orchid', 'Point'),
+    createVectorLayer('Puntos de Alturas Topográficas', 'puntos_de_alturas_topograficas', 'plum', 'Point'),
+    createVectorLayer('Puntos del Terreno', 'puntos_del_terreno', 'khaki', 'Point'),
+    createVectorLayer('Salvado de Obstáculo', 'salvado_de_obstaculo', 'lavender', 'Point'),
+    createVectorLayer('Señalizaciones', 'senalizaciones', 'ivory', 'Point'),
   ];
 
   const lineLayers = [
-    createVectorLayer('Curso de Agua', 'curso_de_agua', 'blue'),
-    createVectorLayer('Curvas de Nivel', 'curvas_de_nivel', 'brown'),
-    createVectorLayer('Límite Político Administrativo', 'limite_politico_administrativo', 'red'),
-    createVectorLayer('Líneas de Conducción de Energía', 'lineas_de_conduccion_ene', 'orange'),
-    createVectorLayer('Red Ferroviaria', 'red_ferroviaria', 'black'),
-    createVectorLayer('Red Vial', 'red_vial', 'yellow'),
-    createVectorLayer('Vías Secundarias', 'vias_secundarias', 'green'),
+    createVectorLayer('Curso de Agua', 'curso_de_agua', 'blue', 'LineString'),
+    createVectorLayer('Curvas de Nivel', 'curvas_de_nivel', 'brown', 'LineString'),
+    createVectorLayer('Límite Político Administrativo', 'limite_politico_administrativo', 'red', 'LineString'),
+    createVectorLayer('Líneas de Conducción de Energía', 'lineas_de_conduccion_ene', 'orange', 'LineString'),
+    createVectorLayer('Red Ferroviaria', 'red_ferroviaria', 'black', 'LineString'),
+    createVectorLayer('Red Vial', 'red_vial', 'yellow', 'LineString'),
+    createVectorLayer('Vías Secundarias', 'vias_secundarias', 'green', 'LineString'),
   ];
 
   const polygonLayers = [
-    createTileLayer('Ejido', 'ejido'),
-    createTileLayer('Espejos de Agua', 'espejos_de_agua'),
-    createTileLayer('Isla', 'isla'),
-    createTileLayer('País', 'pais_lim'),
-    createTileLayer('Sue Congelado', 'sue_congelado'),
-    createTileLayer('Sue Consolidado', 'sue_consolidado'),
-    createTileLayer('Sue Costero', 'sue_costero'),
-    createTileLayer('Sue Hidromorfologico', 'sue_hidromorfologico'),
-    createTileLayer('Sue No Consolidado', 'sue_no_consolidado'),
-    createTileLayer('Veg Arborea', 'veg_arborea'),
-    createTileLayer('Veg Arbustiva', 'veg_arbustiva'),
-    createTileLayer('Veg Cultivos', 'veg_cultivos'),
-    createTileLayer('Veg Hidrofila', 'veg_hidrofila'),
-    createTileLayer('Veg Suelo Desnudo', 'veg_suelo_desnudo'),
+    createVectorLayer('Ejido', 'ejido', 'blue', 'Polygon'),
+    createVectorLayer('Espejos de Agua', 'espejos_de_agua', 'cyan', 'Polygon'),
+    createVectorLayer('Isla', 'isla', 'green', 'Polygon'),
+    createVectorLayer('País', 'pais_lim', 'red', 'Polygon'),
+    createVectorLayer('Sue Congelado', 'sue_congelado', 'gray', 'Polygon'),
+    createVectorLayer('Sue Consolidado', 'sue_consolidado', 'brown', 'Polygon'),
+    createVectorLayer('Sue Costero', 'sue_costero', 'yellow', 'Polygon'),
+    createVectorLayer('Sue Hidromorfologico', 'sue_hidromorfologico', 'olive', 'Polygon'),
+    createVectorLayer('Sue No Consolidado', 'sue_no_consolidado', 'orange', 'Polygon'),
+    createVectorLayer('Veg Arborea', 'veg_arborea', 'darkgreen', 'Polygon'),
+    createVectorLayer('Veg Arbustiva', 'veg_arbustiva', 'lightgreen', 'Polygon'),
+    createVectorLayer('Veg Cultivos', 'veg_cultivos', 'green', 'Polygon'),
+    createVectorLayer('Veg Hidrofila', 'veg_hidrofila', 'blue', 'Polygon'),
+    createVectorLayer('Veg Suelo Desnudo', 'veg_suelo_desnudo', 'tan', 'Polygon'),
   ];
 
   return [...pointLayers, ...lineLayers, ...polygonLayers];

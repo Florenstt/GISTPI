@@ -6,6 +6,8 @@
   border-radius: 5px;
   z-index: 1000; /* Asegúrate de que el sidebar esté por encima del mapa */
   padding: 10px;
+  background-color: white; /* Fondo blanco para el sidebar */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra para el sidebar */
 }
 
 .sidebar h3 {
@@ -32,4 +34,25 @@
   padding: 5px;
   width: calc(100% - 20px);
   box-sizing: border-box;
+}
+
+.layer-category {
+  margin-bottom: 15px; /* Espacio entre categorías */
+}
+
+.layer-category h5 {
+  margin: 10px 0; /* Espacio alrededor del título de la categoría */
+  padding: 5px;
+  background-color: #f0f0f0; /* Fondo gris claro para el título de la categoría */
+  border-radius: 3px; /* Bordes redondeados para el título de la categoría */
+  font-size: 16px; /* Tamaño de fuente para el título de la categoría */
+}
+
+.layer-category .dropdown-item {
+  padding: 5px 10px; /* Espacio interno para los elementos de la lista */
+  cursor: pointer; /* Cambia el cursor al pasar sobre los elementos */
+}
+
+.layer-category .dropdown-item:hover {
+  background-color: #e0e0e0; /* Fondo gris claro al pasar sobre los elementos */
 }

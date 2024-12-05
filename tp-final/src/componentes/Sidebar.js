@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Input } from 'reactstrap';
+import { FaMapMarkerAlt, FaDrawPolygon, FaRoad } from 'react-icons/fa';
 import './Sidebar.css';
 
 const Sidebar = ({ layers, onLayerToggle }) => {
@@ -20,6 +21,10 @@ const Sidebar = ({ layers, onLayerToggle }) => {
     return null;
   }
 
+  const pointLayers = filteredLayers.filter(layer => layer.get('geometryType') === 'Point');
+  const lineLayers = filteredLayers.filter(layer => layer.get('geometryType') === 'LineString');
+  const polygonLayers = filteredLayers.filter(layer => layer.get('geometryType') === 'Polygon');
+
   return (
     <div className="sidebar">
       <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
@@ -34,15 +39,42 @@ const Sidebar = ({ layers, onLayerToggle }) => {
             onChange={handleSearchChange}
             className="search-input"
           />
-          {filteredLayers.map((layer, index) => (
-            <DropdownItem 
-              key={index} 
-              onClick={() => onLayerToggle(layer)} 
-              className={layer.getVisible() ? 'layer-visible' : ''}
-            >
-              {layer.get('title')}
-            </DropdownItem>
-          ))}
+          <div className="layer-category">
+            <h5><FaMapMarkerAlt /> Puntos</h5>
+            {pointLayers.map((layer, index) => (
+              <DropdownItem 
+                key={index} 
+                onClick={() => onLayerToggle(layer)} 
+                className={layer.getVisible() ? 'layer-visible' : ''}
+              >
+                {layer.get('title')}
+              </DropdownItem>
+            ))}
+          </div>
+          <div className="layer-category">
+            <h5><FaRoad /> Líneas</h5>
+            {lineLayers.map((layer, index) => (
+              <DropdownItem 
+                key={index} 
+                onClick={() => onLayerToggle(layer)} 
+                className={layer.getVisible() ? 'layer-visible' : ''}
+              >
+                {layer.get('title')}
+              </DropdownItem>
+            ))}
+          </div>
+          <div className="layer-category">
+            <h5><FaDrawPolygon /> Polígonos</h5>
+            {polygonLayers.map((layer, index) => (
+              <DropdownItem 
+                key={index} 
+                onClick={() => onLayerToggle(layer)} 
+                className={layer.getVisible() ? 'layer-visible' : ''}
+              >
+                {layer.get('title')}
+              </DropdownItem>
+            ))}
+          </div>
         </DropdownMenu>
       </Dropdown>
     </div>
