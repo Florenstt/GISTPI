@@ -25,3 +25,18 @@
 .legend-title {
   font-size: 14px;
 }
+
+.legend {
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  max-width: 300px;
+}
+
+.legend-icon,
+.legend-style {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
