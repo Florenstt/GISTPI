@@ -1,18 +1,47 @@
 // Legend.js
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import ImageWMS from 'ol/source/ImageWMS';
 import './Legend.css';
 
 const Legend = ({ layers }) => {
-  if (!Array.isArray(layers)) {
-    return null;
-  }
+  const [legendUrl, setLegendUrl] = useState('');
 
-  const activeLayer = layers.find(layer => layer.get('active'));
+  useEffect(() => {
+    const activeLayer = layers.find(layer => layer.getVisible() && layer.getSource() instanceof ImageWMS);
+    if (!activeLayer) return;
+
+    const wmsSource = activeLayer.getSource();
+
+    const updateLegend = (resolution) => {
+      const graphicUrl = wmsSource.getLegendUrl(resolution);
+      setLegendUrl(graphicUrl);
+    };
+
+    // Initial legend
+    const resolution = activeLayer.get('map').getView().getResolution();
+    updateLegend(resolution);
+
+    // Update the legend when the resolution changes
+    const view = activeLayer.get('map').getView();
+    const handleResolutionChange = () => {
+      const resolution = view.getResolution();
+      updateLegend(resolution);
+    };
+    view.on('change:resolution', handleResolutionChange);
+
+    // Cleanup event listener on unmount
+    return () => {
+      view.un('change:resolution', handleResolutionChange);
+    };
+  }, [layers]);
+
   const visibleLayers = layers.filter(layer => layer.getVisible());
 
   if (visibleLayers.length === 0) {
     return null;
   }
+
+  const activeLayer = layers.find(layer => layer.get('active'));
 
   return (
     <div className="legend-section">
@@ -32,6 +61,7 @@ const Legend = ({ layers }) => {
           </li>
         ))}
       </ul>
+      {legendUrl && <img id="legend" src={legendUrl} alt="WMS Legend" />}
     </div>
   );
 };
