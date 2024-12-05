@@ -2,12 +2,14 @@
 import React, { useState } from 'react';
 import { Button } from 'reactstrap';
 import AddAgroActivityComponent from './AddAgroActivityComponent'; // Importa el componente
+import SearchLayerByName from './SearchLayerByName'; // Importa el nuevo componente
 import './NavBar.css';
 
-const Navbar = ({ map, isDrawing, onDrawButtonClick, onClearLengthMeasurements, onClearAreaMeasurements, drawType, setDrawType, onSearchAgroActivitiesClick }) => {
+const Navbar = ({ map, isDrawing, onDrawButtonClick, onClearLengthMeasurements, onClearAreaMeasurements, drawType, setDrawType, onSearchAgroActivitiesClick, layers }) => {
   const [showAddAgroActivity, setShowAddAgroActivity] = useState(false); // Estado para controlar la visibilidad del modal
   const [isDrawingPoint, setIsDrawingPoint] = useState(false); // Estado para controlar si se está dibujando un punto
   const [coordinates, setCoordinates] = useState(null);
+  const [showSearchLayerByName, setShowSearchLayerByName] = useState(false); // Estado para controlar la visibilidad del nuevo componente
 
   const handleDrawButtonClick = (type) => {
     if (isDrawing && drawType === type) {
@@ -54,6 +56,14 @@ const Navbar = ({ map, isDrawing, onDrawButtonClick, onClearLengthMeasurements, 
     setCoordinates(null);
   };
 
+  const handleSearchLayerByNameClick = () => {
+    setShowSearchLayerByName(true);
+  };
+
+  const handleCloseSearchLayerByName = () => {
+    setShowSearchLayerByName(false);
+  };
+
   return (
     <div className="navbar-section">
       <div className="navbar-box">
@@ -81,6 +91,12 @@ const Navbar = ({ map, isDrawing, onDrawButtonClick, onClearLengthMeasurements, 
         >
           Buscar Actividades Agropecuarias
         </Button>
+        <Button 
+          color="secondary" 
+          onClick={handleSearchLayerByNameClick}
+        >
+          Buscar Nombre de Algo
+        </Button>
         <div className="zoom-buttons">
           <Button color="secondary" onClick={handleZoomIn}>
             <i className="bi bi-zoom-in"></i>
@@ -96,6 +112,12 @@ const Navbar = ({ map, isDrawing, onDrawButtonClick, onClearLengthMeasurements, 
         map={map}
         onPointDrawn={handlePointDrawn}
         isDrawingPoint={isDrawingPoint}
+      />
+      <SearchLayerByName
+        show={showSearchLayerByName}
+        handleClose={handleCloseSearchLayerByName}
+        map={map}
+        layers={layers} // Pasa las capas al componente
       />
     </div>
   );

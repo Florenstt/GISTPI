@@ -10,6 +10,7 @@ import LengthMeasurement from './componentes/LengthMeasurement';
 import AreaMeasurement from './componentes/AreaMeasurement';
 import { createLayers } from './componentes/LayersComponent';
 import SearchAgroActivities from './componentes/SearchAgroActivities';
+import SearchLayerByName from './componentes/SearchLayerByName';
 
 function App() {
   const [layers, setLayers] = useState(createLayers());
@@ -83,6 +84,7 @@ function App() {
         drawType={drawType}
         setDrawType={setDrawType}
         onSearchAgroActivitiesClick={handleSearchAgroActivitiesClick}
+        layers={layers} // Pasa las capas al componente
       />
       <div className="container-fluid main-content">
         <div className="row content-row">

@@ -15,7 +15,6 @@ import { fromLonLat } from 'ol/proj';
 import './MapComponent.css';
 
 export const createLayers = () => {
-
   const actividadesAgropecuariasLayer = new VectorLayer({
     title: "Actividades Agropecuarias",
     visible: false,
@@ -24,8 +23,7 @@ export const createLayers = () => {
       format: new GeoJSON()
     }),
     style: function (feature) {
-      // Define estilos basados en atributos
-      const actividad = feature.get('actividad'); // Cambia por el nombre del atributo
+      const actividad = feature.get('actividad');
       let fillColor;
       switch (actividad) {
         case 'Ganadería':
@@ -52,18 +50,25 @@ export const createLayers = () => {
     },
   });
 
-  const actividadesEconomicasLayer = new TileLayer({
+  const actividadesEconomicasLayer = new VectorLayer({
     title: "Actividades Económicas",
     visible: false,
-    styleUrl: 'http://localhost:8080/geoserver/TPI/wms?service=WMS&request=GetLegendGraphic&version=1.1.1&format=image/png&layer=TPI:actividades_economicas',
-    source: new TileWMS({
-      url: 'http://localhost:8080/geoserver/TPI/wms',
-      params: {
-        LAYERS: 'TPI:actividades_economicas',
-        TILED: true
-      },
-      serverType: 'geoserver'
-    })
+    source: new VectorSource({
+      url: 'http://localhost:8080/geoserver/TPI/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=TPI%3Aactividades_economicas&outputFormat=application%2Fjson',
+      format: new GeoJSON()
+    }),
+    style: new Style({
+      image: new CircleStyle({
+        radius: 5,
+        fill: new Fill({
+          color: 'rgba(255, 100, 100, 0.6)',
+        }),
+        stroke: new Stroke({
+          color: '#333333',
+          width: 1,
+        }),
+      }),
+    }),
   });
 
   const complejoDeEnergiaLayer = new TileLayer({
@@ -639,10 +644,6 @@ export const createLayers = () => {
       serverType: 'geoserver'
     })
   });
-  
-
-
-  
 
   const vegHidrofilaLayer = new TileLayer({
     title: "Vegetación Hidrófila",
@@ -687,8 +688,8 @@ export const createLayers = () => {
   });
 
   return [
-    actividadesEconomicasLayer,
     actividadesAgropecuariasLayer,
+    actividadesEconomicasLayer,
     complejoDeEnergiaLayer,
     cursoDeAguaLayer,
     curvasDeNivelLayer,
