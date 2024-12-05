@@ -10,18 +10,55 @@ import GeoJSON from 'ol/format/GeoJSON';
 import Style from 'ol/style/Style';
 import Icon from 'ol/style/Icon';
 import { fromLonLat } from 'ol/proj';
+import './MapComponent.css';
 import actividadesAgropecuariasIcon from '../assets/icons/actividadesAgropecuarias.png'; // Importa el archivo PNG por defecto
 import actividadesEconomicasIcon from '../assets/icons/actividadesEconomicas.png';
 import complejoEnergiaIcon from '../assets/icons/ComplejoDeEnergiaEne.png';
 import defaultIcon from '../assets/icons/default.png'; // Importa un ícono por defecto
-import './MapComponent.css';
+import edifDeporYEsparcimientoIcon from '../assets/icons/EdificioDeporYEsparcimiento.png';
+import edifEducacionIcon from '../assets/icons/EdificiosEducacion.png';
+import edifReligiososIcon from '../assets/icons/EdificioReligiosos.png';
+import edificioDeSeguridadIcon from '../assets/icons/EdificioDeSeguridadIPS.png';
+import edificioPublicoIcon from '../assets/icons/EdificioPublicosIPS.png';
+import edificiosFerroviariosIcon from '../assets/icons/EdificiosFerroviarios.png';
+import edificioDeSaludIcon from '../assets/icons/EdificioDeSaludIPS.png';
+import estructurasPortuariasIcon from '../assets/icons/EstructurasPortuarias.png';
+import infraestAeroportuariaPuntoIcon from '../assets/icons/InfraestruraAeroportuariaPunto.png';
+import infraestructuraHidroIcon from '../assets/icons/InfraestruraHidro.png';
+import localidadIcon from '../assets/icons/Localidades.png';
+import marcasYSenalesIcon from '../assets/icons/MarcasYSeñales.png';
+import obraPortuariaIcon from '../assets/icons/ObraPortuaria.png';
+import otrasEdificacionesIcon from '../assets/icons/OtrasEdificaciones.png';
+import puenteRedVialPuntoIcon from '../assets/icons/PuenteRedVialPuntos.png';
+import puntosDeAlturasTopograficasIcon from '../assets/icons/PuntosDeAlturasTopograficas.png';
+import puntosDelTerrenoIcon from '../assets/icons/PuntosDelTerreno.png';
+import senalizacionesIcon from '../assets/icons/Senalizaciones.png';
+import edificiosConstruccionesTuristicas from '../assets/icons/edif_construcciones_turisticas.png';
 
 export const createLayers = () => {
   const iconMapping = {
     'actividades_agropecuarias': actividadesAgropecuariasIcon,
     'actividades_economicas': actividadesEconomicasIcon,
-    'complejo_de_energia': complejoEnergiaIcon,
-    // Añade más mapeos según sea necesario
+    'complejo_de_energia_ene': complejoEnergiaIcon,
+    'edif_construcciones_turisticas': edificiosConstruccionesTuristicas,
+    'edif_depor_y_esparcimiento': edifDeporYEsparcimientoIcon,
+    'edif_educacion': edifEducacionIcon,
+    'edif_religiosos': edifReligiososIcon,
+    'edificio_de_seguridad_ips': edificioDeSeguridadIcon,
+    'edificio_publico_ips': edificioPublicoIcon,
+    'edificios_ferroviarios': edificiosFerroviariosIcon,
+    'edificio_de_salud_ips': edificioDeSaludIcon,
+    'estructuras_portuarias': estructurasPortuariasIcon,
+    'infraestructura_aeroportuaria_punto': infraestAeroportuariaPuntoIcon,
+    'infraestructura_hidro': infraestructuraHidroIcon,
+    'localidades': localidadIcon,
+    'marcas_y_senales': marcasYSenalesIcon,
+    'obra_portuaria': obraPortuariaIcon,
+    'otras_edificaciones': otrasEdificacionesIcon,
+    'puente_red_vial_puntos': puenteRedVialPuntoIcon,
+    'puntos_de_alturas_topograficas': puntosDeAlturasTopograficasIcon,
+    'puntos_del_terreno': puntosDelTerrenoIcon,
+    'senalizaciones': senalizacionesIcon,
   };
 
   const createVectorLayer = (title, typeName, geometryType) => {
@@ -35,7 +72,7 @@ export const createLayers = () => {
     const pngStyle = new Style({
       image: new Icon({
         src: iconSrc, // Usa el PNG importado
-        scale: 0.3, // Ajusta el tamaño del PNG
+        scale: 0.8, // Ajusta el tamaño del PNG
       }),
     });
 
@@ -69,23 +106,23 @@ export const createLayers = () => {
   const pointLayers = [
     createVectorLayer('Actividades Agropecuarias', 'actividades_agropecuarias', 'Point'),
     createVectorLayer('Actividades Económicas', 'actividades_economicas', 'Point'),
-    createVectorLayer('Complejo de Energía', 'complejo_de_energia', 'Point'),
+    createVectorLayer('Complejo de Energía', 'complejo_de_energia_ene', 'Point'),
     createVectorLayer('Edif Construcciones Turísticas', 'edif_construcciones_turisticas', 'Point'),
     createVectorLayer('Edif Depor y Esparcimiento', 'edif_depor_y_esparcimiento', 'Point'),
     createVectorLayer('Edif Educación', 'edif_educacion', 'Point'),
     createVectorLayer('Edif Religiosos', 'edif_religiosos', 'Point'),
-    createVectorLayer('Edificio de Seguridad', 'edificio_de_seguridad', 'Point'),
-    createVectorLayer('Edificio Público', 'edificio_publico', 'Point'),
+    createVectorLayer('Edificio de Seguridad', 'edificio_de_seguridad_ips', 'Point'),
+    createVectorLayer('Edificio Público', 'edificio_publico_ips', 'Point'),
     createVectorLayer('Edificios Ferroviarios', 'edificios_ferroviarios', 'Point'),
-    createVectorLayer('Edificio de Salud', 'edificio_de_salud', 'Point'),
+    createVectorLayer('Edificio de Salud', 'edificio_de_salud_ips', 'Point'),
     createVectorLayer('Estructuras Portuarias', 'estructuras_portuarias', 'Point'),
-    createVectorLayer('Infraest Aeroportuaria Punto', 'infraest_aeroportuaria_punto', 'Point'),
+    createVectorLayer('Infraest Aeroportuaria Punto', 'infraestructura_aeroportuaria_punto', 'Point'),
     createVectorLayer('Infraestructura Hidro', 'infraestructura_hidro', 'Point'),
-    createVectorLayer('Localidad', 'localidad', 'Point'),
+    createVectorLayer('Localidades', 'localidades', 'Point'),
     createVectorLayer('Marcas y Señales', 'marcas_y_senales', 'Point'),
     createVectorLayer('Obra Portuaria', 'obra_portuaria', 'Point'),
     createVectorLayer('Otras Edificaciones', 'otras_edificaciones', 'Point'),
-    createVectorLayer('Puente Red Vial Punto', 'puente_red_vial_punto', 'Point'),
+    createVectorLayer('Puente Red Vial Punto', 'puente_red_vial_puntos', 'Point'),
     createVectorLayer('Puntos de Alturas Topográficas', 'puntos_de_alturas_topograficas', 'Point'),
     createVectorLayer('Puntos del Terreno', 'puntos_del_terreno', 'Point'),
     createVectorLayer('Salvado de Obstáculo', 'salvado_de_obstaculo', 'Point'),
@@ -93,9 +130,9 @@ export const createLayers = () => {
   ];
 
   const lineLayers = [
-    createVectorLayer('Curso de Agua', 'curso_de_agua', 'LineString'),
+    createVectorLayer('Curso de Agua', 'curso_de_agua_hid', 'LineString'),
     createVectorLayer('Curvas de Nivel', 'curvas_de_nivel', 'LineString'),
-    createVectorLayer('Límite Político Administrativo', 'limite_politico_administrativo', 'LineString'),
+    createVectorLayer('Límite Político Administrativo', 'limite_politico_administrativo_lim', 'LineString'),
     createVectorLayer('Líneas de Conducción de Energía', 'lineas_de_conduccion_ene', 'LineString'),
     createVectorLayer('Red Ferroviaria', 'red_ferroviaria', 'LineString'),
     createVectorLayer('Red Vial', 'red_vial', 'LineString'),
@@ -104,7 +141,7 @@ export const createLayers = () => {
 
   const polygonLayers = [
     createTileLayer('Ejido', 'ejido'),
-    createTileLayer('Espejos de Agua', 'espejos_de_agua'),
+    createTileLayer('Espejos de Agua', 'espejo_de_agua_hid'),
     createTileLayer('Isla', 'isla'),
     createTileLayer('País', 'pais_lim'),
     createTileLayer('Sue Congelado', 'sue_congelado'),

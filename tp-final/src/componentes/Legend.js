@@ -9,7 +9,7 @@ const Legend = ({ layers }) => {
     const visibleLayers = layers.filter(layer => layer.getVisible());
     const legendItems = visibleLayers.map(layer => {
       const styleUrl = layer.get('styleUrl');
-      const iconSrc = layer.get('iconSrc');
+      const iconSrc = layer.get('style');
       return { title: layer.get('title'), styleUrl, iconSrc };
     });
     setLegendItems(legendItems);
